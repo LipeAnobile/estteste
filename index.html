@@ -26,248 +26,185 @@
         }
 
         html { scroll-behavior: smooth; }
-        body { background-color: var(--color-bg); color: #E3E3E3; font-family: var(--font-text); overflow-x: hidden; }
+        body { background-color: var(--color-bg); color: #E3E3E3; font-family: var(--font-text); overflow-x: hidden; width: 100%; }
 
         h1, h2, h3, .font-title { font-family: var(--font-title); text-transform: uppercase; }
         
         .neon-text { color: var(--color-purple-neon); text-shadow: 0 0 15px var(--color-purple-neon); }
         .neon-text-white { color: #fff; text-shadow: 0 0 10px var(--color-purple-neon); }
 
-        /* HERO FULL SCREEN */
+        /* --- ANIMAÇÕES --- */
+        @keyframes movingGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .cta-animated {
+            background: linear-gradient(270deg, #a400ff, #ff00e5, #7a00ff, #240046);
+            background-size: 300% 300%;
+            animation: movingGradient 6s ease infinite;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px -10px rgba(164, 0, 255, 0.6);
+        }
+
+        .cta-animated:hover {
+            transform: scale(1.05) translateY(-3px);
+            box-shadow: 0 15px 40px -5px rgba(164, 0, 255, 0.8);
+            filter: brightness(1.2);
+        }
+
+        /* --- HERO SECTION FULLSCREEN RESPONSIVA --- */
         .hero-container {
-            height: 100vh;
-            height: 100dvh; 
-            width: 100%;
             position: relative;
-            overflow: hidden;
+            height: 100dvh; /* dvh é melhor para navegadores mobile */
+            width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
             text-align: center;
-            padding-top: 4rem;
         }
 
         .hero-banner {
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
         }
 
         .hero-slide {
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            opacity: 0;
-            transition: opacity 1.5s ease-in-out;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background-size: cover;
             background-position: center;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            transform: scale(1.1);
+            transition: opacity 1.5s ease-in-out, transform 8s linear;
         }
 
-        .hero-slide.active { opacity: 1; }
+        .hero-slide.active {
+            opacity: 1;
+            transform: scale(1);
+        }
 
         .hero-overlay {
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, 
-                rgba(0,0,0,0.4) 0%, 
-                rgba(0,0,0,0.7) 50%, 
-                rgba(0,0,0,0.95) 100%);
-            z-index: 0;
-        }
-
-        /* --- MENU OVERLAY --- */
-        #menu-overlay {
-            position: fixed;
-            top: 0; right: 0;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.98);
-            backdrop-filter: blur(20px);
-            z-index: 120;
+            background: radial-gradient(circle, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.9) 100%);
+            z-index: 2;
+        }
+
+        /* --- PARCEIROS --- */
+        .partner-ring {
+            position: relative;
+            padding: 2px; 
+            background: linear-gradient(45deg, #a400ff, #ff00e5, #ffb800, #ff0055);
+            background-size: 200% 200%;
+            animation: movingGradient 4s linear infinite;
+            border-radius: 50%;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            transform: translateX(100%);
-            transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+            transition: transform 0.3s ease;
         }
 
-        #menu-overlay.active { transform: translateX(0); }
-
-        .menu-link {
-            font-family: var(--font-title);
-            font-size: clamp(1.5rem, 5vw, 3rem);
-            color: #fff;
-            text-decoration: none;
-            margin: 0.8rem 0;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .menu-link:hover {
-            color: var(--color-purple-neon);
-            text-shadow: 0 0 20px var(--color-purple-neon);
-            transform: skewX(-5deg);
-        }
-
-        /* --- SESSÃO LINE-UP: VÁCUO DE COLISÃO --- */
-        #lineup-vacuum {
-            position: relative;
-            width: 100%;
-            height: 600px;
-            background: #050505;
-            overflow: hidden;
-            border-top: 1px solid rgba(164, 0, 255, 0.2);
-            border-bottom: 1px solid rgba(164, 0, 255, 0.2);
-        }
-
-        .artist-bubble {
-            position: absolute;
+        .partner-ring img {
+            border: 2px solid #000;
             border-radius: 50%;
-            border: 2px solid rgba(164, 0, 255, 0.5);
-            overflow: hidden;
-            cursor: pointer;
-            transition: border-color 0.3s, box-shadow 0.3s;
-            user-select: none;
             background: #000;
         }
 
-        .artist-bubble:hover {
-            border-color: #fff;
-            box-shadow: 0 0 30px rgba(164, 0, 255, 0.8);
-            z-index: 50;
-        }
-
-        .artist-bubble img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            pointer-events: none;
-            filter: grayscale(40%);
-        }
-
-        .artist-bubble:hover img { filter: grayscale(0%); }
-
-        .bubble-label {
-            position: absolute;
-            bottom: 15px; left: 0; right: 0;
-            text-align: center;
-            font-family: var(--font-title);
-            font-size: 11px;
-            color: #fff;
-            text-shadow: 0 0 8px #000;
+        /* --- MENU --- */
+        #menu-overlay {
+            position: fixed;
+            top: 80px;
+            right: 16px;
+            width: calc(100% - 32px);
+            max-width: 300px;
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 120;
+            border: 1px solid rgba(164, 0, 255, 0.3);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
             opacity: 0;
-            transition: opacity 0.3s;
-            font-weight: 700;
-            pointer-events: none;
+            visibility: hidden;
+            transform: translateY(-10px) scale(0.95);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
         }
 
-        .artist-bubble:hover .bubble-label { opacity: 1; }
-
-        @keyframes pulse-glow {
-            0% { box-shadow: 0 0 10px rgba(164, 0, 255, 0.6); transform: scale(1); }
-            50% { box-shadow: 0 0 30px rgba(164, 0, 255, 1); transform: scale(1.05); }
-            100% { box-shadow: 0 0 10px rgba(164, 0, 255, 0.6); transform: scale(1); }
+        #menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
         }
 
-        .cta-pulse { animation: pulse-glow 2s infinite ease-in-out; }
+        .menu-link {
+            font-family: var(--font-title);
+            font-size: 0.85rem;
+            color: #fff;
+            text-decoration: none;
+            display: block;
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+            transition: all 0.2s ease;
+            letter-spacing: 0.15em;
+            border-left: 2px solid transparent;
+        }
 
-        /* --- ORÁCULO ESTILIZADO E ANIMADO --- */
+        .menu-link:hover {
+            background: rgba(164, 0, 255, 0.1);
+            color: var(--color-purple-neon);
+            border-left: 2px solid var(--color-purple-neon);
+        }
+
+        /* ORÁCULO */
         .oracle-glow-ring {
             position: absolute;
-            width: 110%;
-            height: 110%;
-            border: 2px dashed rgba(164, 0, 255, 0.3);
+            width: 110%; height: 110%;
+            border: 1px dashed rgba(164, 0, 255, 0.3);
             border-radius: 50%;
             animation: spin 15s linear infinite;
             top: -5%; left: -5%;
             pointer-events: none;
         }
-
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        .oracle-pulse {
-            animation: oracle-pulse-anim 3s infinite ease-in-out;
+        @keyframes subtle-shake {
+            0% { transform: translate(0, 0); }
+            50% { transform: translate(-3px, -3px); }
+            100% { transform: translate(0, 0); }
         }
+        .shake-active { animation: subtle-shake 0.3s ease-in-out both; }
 
-        @keyframes oracle-pulse-anim {
-            0%, 100% { box-shadow: 0 0 40px rgba(164, 0, 255, 0.2); transform: scale(1); }
-            50% { box-shadow: 0 0 80px rgba(164, 0, 255, 0.5); transform: scale(1.02); }
-        }
+        /* FAQ */
+        .faq-item { border-bottom: 1px solid rgba(164, 0, 255, 0.1); }
+        .faq-content { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0, 1, 0, 1); }
+        .faq-item.active .faq-content { max-height: 500px; padding-bottom: 1.5rem; }
 
-        /* ANIMAÇÃO DE TREMIDA (SHAKE) */
-        @keyframes tech-shake {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            10% { transform: translate(-4px, -2px) rotate(-1deg); }
-            20% { transform: translate(3px, 1px) rotate(1deg); }
-            30% { transform: translate(-4px, 2px) rotate(-1deg); }
-            40% { transform: translate(3px, -1px) rotate(1deg); }
-            50% { transform: translate(-2px, 2px) rotate(-1deg); }
-            60% { transform: translate(2px, -2px) rotate(1deg); }
-            70% { transform: translate(-3px, 1px) rotate(-1deg); }
-            80% { transform: translate(3px, 2px) rotate(1deg); }
-            90% { transform: translate(-1px, -2px) rotate(-1deg); }
-            100% { transform: translate(0, 0) rotate(0deg); }
-        }
+        .stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; opacity: 0.4; background: url('https://www.transparenttextures.com/patterns/stardust.png'); pointer-events: none; }
 
-        .shake-active {
-            animation: tech-shake 0.4s cubic-bezier(.36,.07,.19,.97) both !important;
-            border-color: #fff !important;
-            box-shadow: 0 0 100px rgba(164, 0, 255, 0.8) !important;
+        /* Ajustes específicos para mobile */
+        @media (max-width: 640px) {
+            .hero-container { padding-top: 60px; }
+            .count-box { padding: 0.75rem 0.25rem !important; }
+            .count-box span:first-child { font-size: 1.5rem !important; }
         }
-
-        .oracle-float {
-            animation: float 4s infinite ease-in-out;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        /* --- FAQ Estilos --- */
-        .faq-item {
-            border-bottom: 1px solid rgba(164, 0, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-        .faq-item:last-child { border-bottom: none; }
-        .faq-trigger { cursor: pointer; }
-        .faq-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s cubic-bezier(0, 1, 0, 1);
-        }
-        .faq-item.active .faq-content {
-            max-height: 500px;
-            transition: max-height 0.4s cubic-bezier(1, 0, 1, 0);
-            padding-bottom: 1.5rem;
-        }
-        .faq-item.active .faq-icon {
-            transform: rotate(45deg);
-            color: var(--color-purple-neon);
-        }
-
-        .stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; opacity: 0.5; background: url('https://www.transparenttextures.com/patterns/stardust.png'); pointer-events: none; }
-
-        @media (max-width: 768px) {
-            #lineup-vacuum { height: 500px; }
-            h1 { font-size: 1.8rem !important; }
-        }
-
-        .chat-btn {
-            position: fixed;
-            bottom: 25px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #a400ff);
-            background-size: 400% 400%;
-            border-radius: 50%;
-            display: flex;
-            align-items: center; justify-content: center;
-            z-index: 1001;
-            animation: gradientBG 8s ease infinite;
-        }
-        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
     </style>
 </head>
 <body class="relative">
@@ -275,71 +212,78 @@
     <div class="stars"></div>
 
     <!-- Navegação -->
-    <nav class="fixed top-0 left-0 right-0 z-[110] bg-black/40 backdrop-blur-md border-b border-purple-900/20">
-        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center h-20">
-            <a href="#" id="brand-logo" class="font-title text-lg md:text-xl neon-text-white tracking-tighter">Estação Trap_019</a>
-            <button id="menu-toggle" class="text-white hover:text-purple-400 transition-colors focus:outline-none p-2">
-                <svg id="hamburger-icon" class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <nav class="fixed top-0 left-0 right-0 z-[150] bg-black/60 backdrop-blur-lg border-b border-purple-900/20">
+        <div class="max-w-7xl mx-auto px-4 md:px-6 flex justify-between items-center h-16 md:h-20">
+            <a href="#" id="brand-logo" class="font-title text-base md:text-xl neon-text-white tracking-tighter">Estação Trap_019</a>
+            
+            <button id="menu-toggle" class="text-white hover:text-purple-400 transition-all p-2 flex items-center gap-2 group">
+                <span id="menu-text" class="font-title text-[9px] tracking-[0.2em] hidden md:block opacity-0 group-hover:opacity-100 transition-opacity">MENU</span>
+                <svg id="hamburger-icon" class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path id="menu-path" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
                 </svg>
             </button>
         </div>
     </nav>
 
-    <!-- Menu Overlay -->
+    <!-- Menu Dropdown -->
     <div id="menu-overlay">
-        <div class="flex flex-col items-center text-center">
-            <a href="#about" class="menu-link" onclick="toggleMenu()">Manifesto</a>
-            <a href="#lineup-vacuum" class="menu-link" onclick="toggleMenu()">Line-up</a>
-            <a href="#oracle" class="menu-link" onclick="toggleMenu()">Oráculo</a>
-            <a href="#map-section" class="menu-link" onclick="toggleMenu()">Localização</a>
-            <a href="#faq" class="menu-link" onclick="toggleMenu()">Dúvidas</a>
-            <a href="#brands" class="menu-link" onclick="toggleMenu()">Marcas</a>
+        <div class="flex flex-col space-y-1">
+            <a href="#about" class="menu-link" onclick="toggleMenu()">01. Manifesto</a>
+            <a href="#lineup-vacuum" class="menu-link" onclick="toggleMenu()">02. Line-up</a>
+            <a href="#oracle" class="menu-link" onclick="toggleMenu()">03. Oráculo</a>
+            <a href="#map-section" class="menu-link" onclick="toggleMenu()">04. Localização</a>
+            <a href="#faq" class="menu-link" onclick="toggleMenu()">05. Dúvidas</a>
+            <div class="h-px bg-purple-900/30 my-3"></div>
+            <a href="parceiros.html" class="menu-link !text-purple-400 !text-[10px]">Ecossistema de Parceiros</a>
         </div>
     </div>
 
-    <!-- SEÇÃO HERO -->
+    <!-- SEÇÃO HERO FULLSCREEN RESPONSIVA -->
     <section class="hero-container">
         <div class="hero-banner">
             <div class="hero-slide active" style="background-image: url('https://i.postimg.cc/ryd2cqhS/abnner.jpg');"></div>
             <div class="hero-slide" style="background-image: url('https://i.postimg.cc/4xZLNyXQ/destaque-artistas-2.png');"></div>
         </div>
+        
         <div class="hero-overlay"></div>
 
-        <div class="relative z-10 px-6 max-w-5xl mx-auto flex flex-col gap-y-6 md:gap-y-10">
-            <div>
-                <span class="text-purple-400 font-title tracking-[0.5em] text-[10px] md:text-xs mb-3 block animate-pulse">CAMPINAS / CENA 019</span>
-                <h1 class="text-2xl md:text-6xl font-black neon-text-white leading-[1.1]">O FUTURO DO UNDERGROUND <br><span class="neon-text">CONECTADO AO UNIVERSO</span></h1>
-            </div>
-            
-            <p class="text-gray-300 text-xs md:text-xl max-w-3xl mx-auto font-light leading-relaxed">
-                A convergência definitiva entre estética urbana e a vibração sonora que define uma geração. 
-            </p>
-
-            <div id="countdown" class="grid grid-cols-4 gap-2 md:flex md:justify-center md:gap-x-6 mx-auto w-full max-w-xl">
-                <div class="count-box py-3 md:py-4 md:px-6 rounded-xl border border-white/5">
-                    <span id="days" class="block text-xl md:text-3xl font-title leading-none">00</span>
-                    <span class="text-[7px] md:text-[9px] text-purple-400 uppercase tracking-widest mt-1">Dias</span>
-                </div>
-                <div class="count-box py-3 md:py-4 md:px-6 rounded-xl border border-white/5">
-                    <span id="hours" class="block text-xl md:text-3xl font-title leading-none">00</span>
-                    <span class="text-[7px] md:text-[9px] text-purple-400 uppercase tracking-widest mt-1">Horas</span>
-                </div>
-                <div class="count-box py-3 md:py-4 md:px-6 rounded-xl border border-white/5">
-                    <span id="minutes" class="block text-xl md:text-3xl font-title leading-none">00</span>
-                    <span class="text-[7px] md:text-[9px] text-purple-400 uppercase tracking-widest mt-1">Min</span>
-                </div>
-                <div class="count-box py-3 md:py-4 md:px-6 rounded-xl border border-white/5">
-                    <span id="seconds" class="block text-xl md:text-3xl font-title leading-none">00</span>
-                    <span class="text-[7px] md:text-[9px] text-purple-400 uppercase tracking-widest mt-1">Seg</span>
-                </div>
+        <div class="relative z-10 px-4 md:px-6 w-full max-w-5xl mx-auto flex flex-col gap-y-6 md:gap-y-12">
+            <div class="space-y-3 md:space-y-4">
+                <span class="text-purple-400 font-title tracking-[0.3em] md:tracking-[0.5em] text-[9px] md:text-sm block animate-pulse">CAMPINAS / CENA 019</span>
+                <h1 class="text-3xl md:text-7xl font-black neon-text-white leading-[1.1] px-2">
+                    O FUTURO DO UNDERGROUND <br>
+                    <span class="neon-text">CONECTADO AO UNIVERSO</span>
+                </h1>
+                <p class="text-gray-300 text-xs md:text-xl max-w-2xl mx-auto font-light leading-relaxed">
+                    A convergência definitiva entre estética urbana e a vibração sonora de uma nova era.
+                </p>
             </div>
 
-            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <a href="#lineup-vacuum" class="w-full sm:w-auto bg-purple-600 hover:bg-purple-500 text-white px-12 py-5 rounded-full font-title text-[11px] tracking-widest transition-all shadow-[0_0_25px_rgba(164,0,255,0.7)]">
+            <!-- Countdown Otimizado para Mobile -->
+            <div id="countdown" class="grid grid-cols-4 gap-2 md:gap-x-8 mx-auto w-full max-w-md md:max-w-2xl">
+                <div class="count-box py-3 md:py-5 rounded-xl md:rounded-2xl bg-black/50 backdrop-blur-md border border-white/10">
+                    <span id="days" class="block text-xl md:text-4xl font-title leading-none">00</span>
+                    <span class="text-[7px] md:text-[10px] text-purple-400 uppercase tracking-widest mt-1 md:mt-2 block">Dias</span>
+                </div>
+                <div class="count-box py-3 md:py-5 rounded-xl md:rounded-2xl bg-black/50 backdrop-blur-md border border-white/10">
+                    <span id="hours" class="block text-xl md:text-4xl font-title leading-none">00</span>
+                    <span class="text-[7px] md:text-[10px] text-purple-400 uppercase tracking-widest mt-1 md:mt-2 block">Horas</span>
+                </div>
+                <div class="count-box py-3 md:py-5 rounded-xl md:rounded-2xl bg-black/50 backdrop-blur-md border border-white/10">
+                    <span id="minutes" class="block text-xl md:text-4xl font-title leading-none">00</span>
+                    <span class="text-[7px] md:text-[10px] text-purple-400 uppercase tracking-widest mt-1 md:mt-2 block">Min</span>
+                </div>
+                <div class="count-box py-3 md:py-5 rounded-xl md:rounded-2xl bg-black/50 backdrop-blur-md border border-white/10">
+                    <span id="seconds" class="block text-xl md:text-4xl font-title leading-none">00</span>
+                    <span class="text-[7px] md:text-[10px] text-purple-400 uppercase tracking-widest mt-1 md:mt-2 block">Seg</span>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center items-center">
+                <a href="#lineup-vacuum" class="cta-animated w-full sm:w-auto text-white px-8 md:px-12 py-4 md:py-5 rounded-full font-title text-[10px] md:text-[11px] tracking-widest">
                     VER LINE-UP COMPLETO
                 </a>
-                <a href="parceiros.html" class="w-full sm:w-auto border border-purple-500/50 hover:bg-purple-600/10 text-white px-10 py-5 rounded-full font-title text-[11px] tracking-widest transition-all backdrop-blur-md font-semibold">
+                <a href="parceiros.html" class="w-full sm:w-auto border border-purple-500/50 hover:bg-purple-600/10 text-white px-8 md:px-10 py-4 md:py-5 rounded-full font-title text-[10px] md:text-[11px] tracking-widest transition-all backdrop-blur-md">
                     OPORTUNIDADES
                 </a>
             </div>
@@ -347,156 +291,171 @@
     </section>
 
     <!-- MANIFESTO -->
-    <section id="about" class="py-24 md:py-40 px-6 max-w-7xl mx-auto scroll-mt-20">
-        <div class="grid md:grid-cols-2 gap-16 items-center">
-            <div class="space-y-8 text-center md:text-left">
+    <section id="about" class="py-16 md:py-40 px-6 max-w-7xl mx-auto scroll-mt-20">
+        <div class="grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+            <div class="space-y-6 md:space-y-8 text-center md:text-left">
                 <div>
-                    <span class="text-purple-400 font-title text-[10px] tracking-[0.5em] mb-4 block">MANIFESTO 019</span>
-                    <h2 class="text-3xl md:text-5xl font-title neon-text-white leading-tight">O MOVIMENTO É <br>CONSTANTE</h2>
+                    <span class="text-purple-400 font-title text-[10px] tracking-[0.5em] mb-3 md:mb-4 block">MANIFESTO 019</span>
+                    <h2 class="text-2xl md:text-5xl font-title neon-text-white leading-tight">O MOVIMENTO É <br>CONSTANTE</h2>
                 </div>
-                <p class="text-gray-400 leading-relaxed text-base md:text-lg font-light">
+                <p class="text-gray-400 leading-relaxed text-sm md:text-lg font-light">
                     Na Estação Trap_019, o caos se torna arte. Somos o ponto onde as trajetórias individuais colidem para criar um novo universo cultural em Campinas.
                 </p>
             </div>
-            <div class="relative">
-                <img src="https://i.postimg.cc/ryd2cqhS/abnner.jpg" class="rounded-3xl border border-purple-600/20 shadow-2xl w-full grayscale">
+            <div class="relative order-first md:order-last">
+                <img src="https://i.postimg.cc/ryd2cqhS/abnner.jpg" class="rounded-2xl md:rounded-3xl border border-purple-600/20 shadow-2xl w-full grayscale aspect-video md:aspect-auto object-cover" alt="Manifesto">
             </div>
         </div>
     </section>
 
-    <!-- SEÇÃO LINE-UP: VÁCUO -->
-    <section id="lineup-vacuum" class="scroll-mt-20">
-        <div class="absolute top-12 left-0 w-full z-20 pointer-events-none text-center">
-            <span class="text-purple-400 font-title text-[9px] tracking-[0.6em] mb-2 block">ORBITAL LINE-UP</span>
-            <h2 class="text-3xl md:text-5xl font-title text-white">CHOQUE DE <span class="neon-text">FREQUÊNCIAS</span></h2>
-        </div>
-        <div id="vacuum-container" class="w-full h-full relative"></div>
-        <div class="absolute bottom-16 left-0 w-full z-30 pointer-events-none flex justify-center px-6">
-            <div class="pointer-events-auto">
-                <a href="artistas.html" class="cta-pulse inline-block bg-purple-600 hover:bg-purple-500 text-white px-10 md:px-14 py-4 md:py-5 rounded-full font-title text-[12px] tracking-[0.3em] transition-all uppercase shadow-[0_0_20px_rgba(164,0,255,0.8)]">
-                    Explorar Todos os Artistas
-                </a>
+    <!-- LINE-UP -->
+    <section id="lineup-vacuum" class="py-16 md:py-40 bg-zinc-950 border-y border-purple-900/20 scroll-mt-20 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-10 md:gap-12 items-center">
+                <div class="order-2 md:order-1 text-center md:text-left space-y-5 md:space-y-6">
+                    <span class="text-purple-400 font-title text-[10px] md:text-xs tracking-[0.5em] uppercase block">Choque de Frequências</span>
+                    <h2 class="text-3xl md:text-7xl font-title text-white leading-tight">
+                        <span class="neon-text">26 ARTISTAS</span> <br>CONFIRMADOS
+                    </h2>
+                    <p class="text-gray-400 text-sm md:text-xl font-light leading-relaxed max-w-lg mx-auto md:mx-0">
+                        Uma curadoria explosiva com os maiores nomes e revelações da cena underground de Campinas e região.
+                    </p>
+                    <div class="pt-4 md:pt-6">
+                        <a href="artistas.html" class="cta-animated text-white px-8 md:px-16 py-4 md:py-5 rounded-full font-title text-[10px] md:text-[13px] tracking-[0.2em] uppercase font-bold">
+                            Ver Line-up Completo
+                        </a>
+                    </div>
+                </div>
+                <div class="order-1 md:order-2 relative group px-4 md:px-0">
+                    <div class="absolute inset-0 bg-purple-600/20 blur-[60px] md:blur-[100px] rounded-full group-hover:bg-purple-600/40 transition-all"></div>
+                    <img src="https://i.postimg.cc/4xZLNyXQ/destaque-artistas-2.png" class="relative z-10 rounded-2xl md:rounded-[2rem] border border-white/10 shadow-2xl transform rotate-1 md:rotate-2 hover:rotate-0 transition-all duration-500 w-full" alt="Destaque Artistas">
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- ORÁCULO MELHORADO -->
-    <section id="oracle" class="py-24 md:py-48 bg-black relative scroll-mt-20 overflow-hidden">
+    <!-- ORÁCULO -->
+    <section id="oracle" class="py-20 md:py-48 bg-black relative scroll-mt-20 overflow-hidden">
         <div class="max-w-4xl mx-auto px-6 text-center">
-            <h2 class="text-4xl md:text-6xl font-title neon-text-white mb-6">O ORÁCULO 019</h2>
-            
-            <!-- CTA Intuitivo -->
-            <div class="mb-12 animate-bounce">
-                <span class="text-purple-400 font-title text-[10px] md:text-xs tracking-[0.3em] uppercase bg-purple-900/20 border border-purple-500/30 px-6 py-3 rounded-full backdrop-blur-sm">
-                    ✨ Clique e veja sua frase do dia
+            <h2 class="text-3xl md:text-6xl font-title neon-text-white mb-6">O ORÁCULO 019</h2>
+            <div class="mb-10 md:mb-12 animate-bounce">
+                <span class="text-purple-400 font-title text-[8px] md:text-xs tracking-[0.3em] uppercase bg-purple-900/20 border border-purple-500/30 px-5 md:px-6 py-2 md:py-3 rounded-full backdrop-blur-sm">
+                    ✨ Clique no cristal e veja seu destino
                 </span>
             </div>
-
             <div class="relative inline-block">
-                <!-- Anel rotativo decorativo -->
                 <div class="oracle-glow-ring"></div>
-                
-                <!-- Core do Oráculo -->
-                <div id="oracleCore" class="oracle-pulse w-40 h-40 md:w-64 md:h-64 bg-gradient-to-tr from-purple-900 via-black to-purple-800 border-2 border-purple-600/40 rounded-full mx-auto flex items-center justify-center cursor-pointer hover:border-white transition-all duration-700 shadow-[0_0_50px_rgba(164,0,255,0.4)] relative z-10 group" onclick="revealFate()">
-                    <span class="text-6xl md:text-8xl oracle-float group-hover:scale-110 transition-transform duration-500">🔮</span>
+                <div id="oracleCore" class="w-32 h-32 md:w-64 md:h-64 bg-gradient-to-tr from-purple-900 via-black to-purple-800 border-2 border-purple-600/40 rounded-full mx-auto flex items-center justify-center cursor-pointer hover:border-white transition-all duration-300 shadow-[0_0_40px_rgba(164,0,255,0.4)] relative z-10 group" onclick="revealFate()">
+                    <span class="text-5xl md:text-8xl">🔮</span>
                 </div>
             </div>
-
-            <!-- Resultado Holográfico -->
-            <div id="oracleResult" class="mt-20 hidden opacity-0 translate-y-10 transition-all duration-700">
-                <div class="bg-purple-950/5 backdrop-blur-xl border border-purple-500/40 p-10 md:p-16 rounded-[3rem] relative shadow-[0_0_100px_rgba(164,0,255,0.15)] max-w-2xl mx-auto">
-                    <div class="absolute top-6 left-6 w-4 h-4 border-t-2 border-l-2 border-purple-500 opacity-50"></div>
-                    <div class="absolute bottom-6 right-6 w-4 h-4 border-b-2 border-r-2 border-purple-500 opacity-50"></div>
-                    
-                    <span class="text-purple-500 font-title text-[10px] tracking-[0.4em] mb-6 block uppercase opacity-70">Sua Visão Orbital</span>
-                    <p id="oracleText" class="text-xl md:text-3xl font-title italic text-white leading-relaxed mb-8"></p>
-                    <p id="oracleArtist" class="text-purple-400 font-bold uppercase tracking-[0.2em] text-xs md:text-sm"></p>
-                    
-                    <button class="mt-12 text-[9px] text-gray-500 hover:text-white uppercase tracking-[0.5em] transition-all border-b border-transparent hover:border-purple-500 pb-1" onclick="revealFate()">Re-calibrar destino</button>
+            <div id="oracleResult" class="mt-12 md:mt-20 hidden opacity-0 translate-y-10 transition-all duration-700 w-full">
+                <div class="bg-purple-950/5 backdrop-blur-xl border border-purple-500/40 p-8 md:p-16 rounded-[2rem] md:rounded-[3rem] relative shadow-[0_0_100px_rgba(164,0,255,0.15)] max-w-2xl mx-auto">
+                    <p id="oracleText" class="text-base md:text-3xl font-title italic text-white leading-relaxed mb-6 md:mb-8"></p>
+                    <p id="oracleArtist" class="text-purple-400 font-bold uppercase tracking-[0.2em] text-[10px] md:text-sm"></p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- MAPA -->
-    <section id="map-section" class="py-24 px-6 bg-black scroll-mt-20">
-        <div class="max-w-7xl mx-auto text-center mb-16">
-            <h2 class="text-3xl md:text-5xl font-title neon-text-white mb-6">LOCALIZAÇÃO</h2>
-            <p class="text-gray-400 text-sm md:text-lg font-light">Praça Mal. Floriano Peixoto - Centro, Campinas - SP</p>
+    <!-- LOCALIZAÇÃO -->
+    <section id="map-section" class="py-16 md:py-24 px-6 bg-black scroll-mt-20">
+        <div class="max-w-7xl mx-auto text-center mb-10 md:mb-16">
+            <h2 class="text-2xl md:text-5xl font-title neon-text-white mb-4">LOCALIZAÇÃO</h2>
+            <p class="text-gray-400 text-xs md:text-lg font-light">Praça Mal. Floriano Peixoto - Centro, Campinas - SP</p>
         </div>
-        <div class="max-w-7xl mx-auto h-[400px] md:h-[500px] rounded-[2.5rem] overflow-hidden border border-purple-600/20">
+        <div class="max-w-7xl mx-auto h-[300px] md:h-[500px] rounded-2xl md:rounded-[2.5rem] overflow-hidden border border-purple-600/20">
             <div id="map" style="height: 100%;"></div>
         </div>
     </section>
 
     <!-- FAQ -->
-    <section id="faq" class="py-24 md:py-40 px-6 bg-black scroll-mt-20">
+    <section id="faq" class="py-16 md:py-40 px-6 bg-black scroll-mt-20">
         <div class="max-w-4xl mx-auto">
-            <div class="text-center mb-16">
-                <span class="text-purple-400 font-title text-[10px] tracking-[0.6em] mb-4 block uppercase">Central de Suporte</span>
-                <h2 class="text-3xl md:text-5xl font-title text-white">DÚVIDAS <span class="neon-text">FREQUENTES</span></h2>
+            <div class="text-center mb-10 md:mb-16">
+                <span class="text-purple-400 font-title text-[9px] md:text-[10px] tracking-[0.6em] mb-3 block uppercase">Suporte</span>
+                <h2 class="text-2xl md:text-5xl font-title text-white">DÚVIDAS <span class="neon-text">FREQUENTES</span></h2>
             </div>
-            <div class="space-y-4">
+            <div class="space-y-3">
                 <div class="faq-item group">
-                    <div class="faq-trigger py-6 flex justify-between items-center" onclick="toggleFaq(this)">
-                        <h3 class="font-title text-sm md:text-lg tracking-wider group-hover:text-purple-400 transition-colors">Qual o valor do ingresso?</h3>
-                        <span class="faq-icon text-2xl transition-transform">+</span>
+                    <div class="faq-trigger py-5 flex justify-between items-center cursor-pointer" onclick="toggleFaq(this)">
+                        <h3 class="font-title text-[11px] md:text-lg tracking-wider group-hover:text-purple-400 transition-colors">Qual o valor do ingresso?</h3>
+                        <span class="faq-icon text-xl transition-transform">+</span>
                     </div>
-                    <div class="faq-content">
-                        <p class="text-gray-400 text-sm md:text-base leading-relaxed">A entrada é gratuita, mediante a doação de 1kg de alimento não perecível para projetos sociais locais.</p>
-                    </div>
+                    <div class="faq-content"><p class="text-gray-400 text-xs md:text-base leading-relaxed">Entrada gratuita mediante a doação de 1kg de alimento não perecível.</p></div>
                 </div>
                 <div class="faq-item group">
-                    <div class="faq-trigger py-6 flex justify-between items-center" onclick="toggleFaq(this)">
-                        <h3 class="font-title text-sm md:text-lg tracking-wider group-hover:text-purple-400 transition-colors">Qual a classificação etária?</h3>
-                        <span class="faq-icon text-2xl transition-transform">+</span>
+                    <div class="faq-trigger py-5 flex justify-between items-center cursor-pointer" onclick="toggleFaq(this)">
+                        <h3 class="font-title text-[11px] md:text-lg tracking-wider group-hover:text-purple-400 transition-colors">Qual a classificação etária?</h3>
+                        <span class="faq-icon text-xl transition-transform">+</span>
                     </div>
-                    <div class="faq-content">
-                        <p class="text-gray-400 text-sm md:text-base leading-relaxed">A classificação é de 16 anos. Menores apenas com pais ou responsáveis legais.</p>
-                    </div>
+                    <div class="faq-content"><p class="text-gray-400 text-xs md:text-base leading-relaxed">Classificação 16 anos. Menores acompanhados pelos pais ou responsáveis legais.</p></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- PARCEIROS -->
-    <section id="brands" class="py-24 md:py-40 px-6 bg-zinc-950/50 border-y border-purple-900/20">
+    <!-- UNIVERSO PARCEIRO -->
+    <section id="brands" class="py-16 md:py-40 px-6 bg-zinc-950/50 border-y border-purple-900/20">
         <div class="max-w-7xl mx-auto text-center">
-            <h2 class="text-2xl md:text-3xl font-title mb-16 md:mb-24 tracking-[0.5em] opacity-40 uppercase">Universo Parceiro</h2>
-            <div class="grid grid-cols-2 md:flex md:flex-wrap md:justify-center items-center gap-10 md:gap-24">
-                <a href="parceiros.html#callidus" class="hover:scale-110 transition-transform duration-300 group flex justify-center"><img src="https://i.postimg.cc/L6XZFKFF/call.png" class="w-24 md:w-40 h-24 md:h-40 rounded-full border border-purple-500/30 object-cover shadow-2xl group-hover:border-purple-500"></a>
-                <a href="parceiros.html#tigresinhas" class="hover:scale-110 transition-transform duration-300 group flex justify-center"><img src="https://i.postimg.cc/zvTc0kYc/tt.jpg" class="w-24 md:w-40 h-24 md:h-40 rounded-full border border-purple-500/30 object-cover shadow-2xl group-hover:border-purple-500"></a>
-                <a href="parceiros.html#dommarco" class="hover:scale-110 transition-transform duration-300 group flex justify-center"><img src="https://i.postimg.cc/cHrG5WgG/dom-marcos.jpg" class="w-24 md:w-40 h-24 md:h-40 rounded-full border border-purple-500/30 object-cover shadow-2xl group-hover:border-purple-500"></a>
-                <a href="parceiros.html#beco" class="hover:scale-110 transition-transform duration-300 group flex justify-center"><img src="https://i.postimg.cc/pVCLSW6L/beco-lp.jpg" class="w-24 md:w-40 h-24 md:h-40 rounded-full border border-purple-500/30 object-cover shadow-2xl group-hover:border-purple-500"></a>
+            <h2 class="text-lg md:text-3xl font-title mb-12 md:mb-24 tracking-[0.3em] md:tracking-[0.5em] opacity-40 uppercase">Universo Parceiro</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-4 items-center gap-8 md:gap-20">
+                <a href="parceiros.html#callidus" class="group flex justify-center">
+                    <div class="partner-ring">
+                        <img src="https://i.postimg.cc/L6XZFKFF/call.png" class="w-20 md:w-36 h-20 md:h-36 object-cover" alt="Callidus">
+                    </div>
+                </a>
+                <a href="parceiros.html#tigresinhas" class="group flex justify-center">
+                    <div class="partner-ring" style="animation-delay: 0.5s;">
+                        <img src="https://i.postimg.cc/zvTc0kYc/tt.jpg" class="w-20 md:w-36 h-20 md:h-36 object-cover" alt="Tigresinhas">
+                    </div>
+                </a>
+                <a href="parceiros.html#dommarco" class="group flex justify-center">
+                    <div class="partner-ring" style="animation-delay: 1s;">
+                        <img src="https://i.postimg.cc/cHrG5WgG/dom-marcos.jpg" class="w-20 md:w-36 h-20 md:h-36 object-cover" alt="Dom Marco">
+                    </div>
+                </a>
+                <a href="parceiros.html#beco" class="group flex justify-center">
+                    <div class="partner-ring" style="animation-delay: 1.5s;">
+                        <img src="https://i.postimg.cc/pVCLSW6L/beco-lp.jpg" class="w-20 md:w-36 h-20 md:h-36 object-cover" alt="Beco">
+                    </div>
+                </a>
             </div>
-            <div class="mt-20">
-                <a href="parceiros.html" class="inline-flex items-center gap-4 bg-white text-black hover:bg-purple-600 hover:text-white px-12 py-5 rounded-full font-title text-[11px] md:text-[13px] tracking-[0.3em] transition-all uppercase font-bold group">Conectar minha Marca</a>
+            <div class="mt-16 md:mt-24">
+                <a href="parceiros.html" class="cta-animated text-white px-10 md:px-12 py-4 md:py-5 rounded-full font-title text-[10px] md:text-[13px] tracking-[0.2em] uppercase font-bold">
+                    Conectar minha Marca
+                </a>
             </div>
         </div>
     </section>
 
     <!-- RODAPÉ -->
-    <footer class="py-20 border-t border-purple-900/20 text-center px-6">
-        <h3 class="font-title text-xl mb-4 neon-text">Estação Trap_019</h3>
-        <div class="mb-12">
-            <a href="regulamento.html" class="inline-flex items-center gap-2 px-8 py-3 rounded-full border border-purple-600/50 hover:bg-purple-600/20 hover:border-purple-500 transition-all font-title text-[10px] tracking-widest text-purple-400 hover:text-white uppercase">Ler Regulamento</a>
-        </div>
-        <p class="text-[8px] text-gray-800 font-mono tracking-widest uppercase">© 2026 ESTAÇÃO TRAP_019. ALL SYSTEMS OPERATIONAL.</p>
+    <footer class="py-12 md:py-20 border-t border-purple-900/20 text-center px-6">
+        <h3 class="font-title text-base md:text-xl mb-4 neon-text">Estação Trap_019</h3>
+        <p class="text-[7px] md:text-[8px] text-gray-800 font-mono tracking-widest uppercase">© 2026 ESTAÇÃO TRAP_019. ALL SYSTEMS OPERATIONAL.</p>
     </footer>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // Menu Logic
         const menuToggle = document.getElementById('menu-toggle');
         const menuOverlay = document.getElementById('menu-overlay');
         const menuPath = document.getElementById('menu-path');
+        const menuText = document.getElementById('menu-text');
+
         function toggleMenu() {
             const isOpen = menuOverlay.classList.toggle('active');
             menuPath.setAttribute('d', isOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16m-7 6h7');
+            if (menuText) menuText.innerText = isOpen ? 'FECHAR' : 'MENU';
         }
         menuToggle.addEventListener('click', toggleMenu);
 
-        // FAQ Logic
+        // Fecha menu ao clicar em link
+        document.querySelectorAll('.menu-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if(menuOverlay.classList.contains('active')) toggleMenu();
+            });
+        });
+
         function toggleFaq(trigger) {
             const item = trigger.parentElement;
             const isActive = item.classList.contains('active');
@@ -504,146 +463,55 @@
             if (!isActive) item.classList.add('active');
         }
 
-        // Oracle Logic
         const oracleVerses = [
             { text: "Nada é perfeito, mas é no caos que a gente aprende a sentir o cheiro do amanhã.", artist: "ViniSeven & Gomesz" },
             { text: "A minha lei da atração é levantar e ir fazer.", artist: "Joana Black" },
             { text: "Dinheiro vai, dinheiro vem, mas a postura ninguém compra.", artist: "DGR" },
-            { text: "Antes de brilhar no palco, brilhe na sua quebrada.", artist: "MDG" },
-            { text: "Não espere o universo trazer, vá buscar a sua galáxia.", artist: "Profecia 019" }
+            { text: "Antes de brilhar no palco, brilhe na sua quebrada.", artist: "MDG" }
         ];
 
         function revealFate() {
             const core = document.getElementById('oracleCore');
             const result = document.getElementById('oracleResult');
-            const text = document.getElementById('oracleText');
-            const artist = document.getElementById('oracleArtist');
-            
-            // Ativa a tremida
             core.classList.add('shake-active');
-            
-            // Remove a classe após a animação terminar (0.4s)
+            result.classList.replace('opacity-100', 'opacity-0');
             setTimeout(() => {
                 core.classList.remove('shake-active');
-            }, 400);
-
-            result.classList.add('hidden', 'opacity-0');
-            setTimeout(() => {
                 const r = oracleVerses[Math.floor(Math.random() * oracleVerses.length)];
-                text.innerText = r.text;
-                artist.innerText = "- " + r.artist;
+                document.getElementById('oracleText').innerText = r.text;
+                document.getElementById('oracleArtist').innerText = "- " + r.artist;
                 result.classList.remove('hidden');
                 setTimeout(() => {
-                    result.classList.remove('opacity-0', 'translate-y-10');
-                    result.classList.add('opacity-100', 'translate-y-0');
-                }, 50);
+                    result.classList.replace('opacity-0', 'opacity-100');
+                    result.classList.remove('translate-y-10');
+                }, 100);
             }, 300);
         }
 
-        // Vacuum Physics
-        const artistsData = [
-            { name: "OS PROFETAS", img: "https://i.postimg.cc/zv1ZLq84/artistas-campinas-estacao-trap.jpg", size: 50 },
-            { name: "JOANA BLACK", img: "https://i.postimg.cc/4xZLNyXQ/destaque-artistas-2.png", size: 50 },
-            { name: "DGR & VINI", img: "https://i.postimg.cc/ryd2cqhS/abnner.jpg", size: 50 },
-            { name: "MDG", img: "https://i.postimg.cc/zv1ZLq84/artistas-campinas-estacao-trap.jpg", size: 70 },
-            { name: "PROFECIA 019", img: "https://i.postimg.cc/4xZLNyXQ/destaque-artistas-2.png", size: 50 },
-            { name: "GOMESZ", img: "https://i.postimg.cc/ryd2cqhS/abnner.jpg", size: 60 },
-            { name: "DJ KAPPA", img: "https://i.postimg.cc/zv1ZLq84/artistas-campinas-estacao-trap.jpg", size: 90 },
-            { name: "LIL VIBE", img: "https://i.postimg.cc/4xZLNyXQ/destaque-artistas-2.png", size: 50 },
-            { name: "OS PROFETAS", img: "https://i.postimg.cc/zv1ZLq84/artistas-campinas-estacao-trap.jpg", size: 50 },
-            { name: "JOANA BLACK", img: "https://i.postimg.cc/4xZLNyXQ/destaque-artistas-2.png", size: 60 },
-            { name: "DGR & VINI", img: "https://i.postimg.cc/ryd2cqhS/abnner.jpg", size: 50 },
-            { name: "MDG", img: "https://i.postimg.cc/zv1ZLq84/artistas-campinas-estacao-trap.jpg", size: 70 },
-            { name: "PROFECIA 019", img: "https://i.postimg.cc/4xZLNyXQ/destaque-artistas-2.png", size: 50 },
-            { name: "GOMESZ", img: "https://i.postimg.cc/ryd2cqhS/abnner.jpg", size: 70},
-            { name: "DJ KAPPA", img: "https://i.postimg.cc/zv1ZLq84/artistas-campinas-estacao-trap.jpg", size: 50 },
-            { name: "LIL VIBE", img: "https://i.postimg.cc/4xZLNyXQ/destaque-artistas-2.png", size: 80 },
-            { name: "LIL VIBE", img: "https://i.postimg.cc/4xZLNyXQ/destaque-artistas-2.png", size: 50 },
-            { name: "LIL VIBE", img: "https://i.postimg.cc/4xZLNyXQ/destaque-artistas-2.png", size: 50 },
-            { name: "LIL VIBE", img: "https://i.postimg.cc/4xZLNyXQ/destaque-artistas-2.png", size: 50 },
-            { name: "LIL VIBE", img: "https://i.postimg.cc/4xZLNyXQ/destaque-artistas-2.png", size: 60 },
-            { name: "LIL VIBE", img: "https://i.postimg.cc/4xZLNyXQ/destaque-artistas-2.png", size: 50 },
-            { name: "LIL VIBE", img: "https://i.postimg.cc/4xZLNyXQ/destaque-artistas-2.png", size: 40 },
-            { name: "LIL VIBE", img: "https://i.postimg.cc/4xZLNyXQ/destaque-artistas-2.png", size: 50 },
-            { name: "LIL VIBE", img: "https://i.postimg.cc/4xZLNyXQ/destaque-artistas-2.png", size: 60 },
-            { name: "LIL VIBE", img: "https://i.postimg.cc/4xZLNyXQ/destaque-artistas-2.png", size: 70 },
-        ];
-
-        const container = document.getElementById('vacuum-container');
-        const bubbles = [];
-        class Bubble {
-            constructor(data) {
-                this.element = document.createElement('div');
-                this.element.className = 'artist-bubble';
-                this.size = window.innerWidth < 768 ? data.size * 0.75 : data.size;
-                this.element.style.width = `${this.size}px`;
-                this.element.style.height = `${this.size}px`;
-                const img = document.createElement('img'); img.src = data.img;
-                this.element.appendChild(img);
-                const label = document.createElement('div'); label.className = 'bubble-label'; label.innerText = data.name;
-                this.element.appendChild(label);
-                container.appendChild(this.element);
-                this.radius = this.size / 2;
-                this.x = Math.random() * (container.clientWidth - this.size);
-                this.y = Math.random() * (container.clientHeight - this.size);
-                this.vx = (Math.random() - 0.5) * 2.5; this.vy = (Math.random() - 0.5) * 2.5;
-                this.isHovered = false;
-                this.element.onmouseenter = () => this.isHovered = true;
-                this.element.onmouseleave = () => this.isHovered = false;
-            }
-            update() {
-                if (this.isHovered) return;
-                this.x += this.vx; this.y += this.vy;
-                if (this.x <= 0 || this.x + this.size >= container.clientWidth) this.vx *= -1;
-                if (this.y <= 0 || this.y + this.size >= container.clientHeight) this.vy *= -1;
-                this.element.style.transform = `translate3d(${this.x}px, ${this.y}px, 0)`;
-            }
-        }
-
         window.onload = () => {
-            artistsData.forEach(d => bubbles.push(new Bubble(d)));
-            function animate() {
-                bubbles.forEach(b => b.update());
-                for (let i = 0; i < bubbles.length; i++) {
-                    for (let j = i + 1; j < bubbles.length; j++) {
-                        const b1 = bubbles[i], b2 = bubbles[j];
-                        const dx = (b2.x + b2.radius) - (b1.x + b1.radius), dy = (b2.y + b2.radius) - (b1.y + b1.radius);
-                        const distance = Math.sqrt(dx * dx + dy * dy);
-                        if (distance < b1.radius + b2.radius) { [b1.vx, b2.vx] = [b2.vx, b1.vx]; [b1.vy, b2.vy] = [b2.vy, b1.vy]; }
-                    }
-                }
-                requestAnimationFrame(animate); 
-            }
-            animate();
-            const map = L.map('map', { scrollWheelZoom: false }).setView([-22.9099, -47.0626], 16);
+            const map = L.map('map', { scrollWheelZoom: false, dragging: !L.Browser.mobile }).setView([-22.9099, -47.0626], 16);
             L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(map);
             L.marker([-22.9099, -47.0626], { icon: L.divIcon({ html: "<div style='background:#a400ff;width:12px;height:12px;border-radius:50%;box-shadow:0 0 15px #a400ff'></div>" }) }).addTo(map);
             
-            // Hero Slider
+            // Hero Slider - 4 SEGUNDOS
             let currentHeroSlide = 0;
             const heroSlides = document.querySelectorAll('.hero-slide');
             setInterval(() => {
+                if(heroSlides.length === 0) return;
                 heroSlides[currentHeroSlide].classList.remove('active');
                 currentHeroSlide = (currentHeroSlide + 1) % heroSlides.length;
                 heroSlides[currentHeroSlide].classList.add('active');
-            }, 5000);
+            }, 4000);
 
             // Countdown
             const eventDate = new Date("June 20, 2026 13:00:00").getTime();
             setInterval(() => {
                 const dist = eventDate - Date.now();
-                const d = Math.floor(dist / 86400000);
-                const h = Math.floor((dist % 86400000) / 3600000);
-                const m = Math.floor((dist % 3600000) / 60000);
-                const s = Math.floor((dist % 60000) / 1000);
-                const daysEl = document.getElementById('days');
-                if (daysEl) daysEl.innerText = d < 10 ? '0'+d : d;
-                const hoursEl = document.getElementById('hours');
-                if (hoursEl) hoursEl.innerText = h < 10 ? '0'+h : h;
-                const minsEl = document.getElementById('minutes');
-                if (minsEl) minsEl.innerText = m < 10 ? '0'+m : m;
-                const secsEl = document.getElementById('seconds');
-                if (secsEl) secsEl.innerText = s < 10 ? '0'+s : s;
+                if(dist < 0) return;
+                if (document.getElementById('days')) document.getElementById('days').innerText = String(Math.floor(dist / 86400000)).padStart(2, '0');
+                if (document.getElementById('hours')) document.getElementById('hours').innerText = String(Math.floor((dist % 86400000) / 3600000)).padStart(2, '0');
+                if (document.getElementById('minutes')) document.getElementById('minutes').innerText = String(Math.floor((dist % 3600000) / 60000)).padStart(2, '0');
+                if (document.getElementById('seconds')) document.getElementById('seconds').innerText = String(Math.floor((dist % 60000) / 1000)).padStart(2, '0');
             }, 1000);
         };
     </script>
