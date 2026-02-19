@@ -157,8 +157,24 @@
             </div>
         </div>
 
-        <div id="artistProfileView" class="view-transition view-hidden">
-            <div id="profileContent" class="max-w-4xl mx-auto py-4">
+        <main class="pt-24 pb-12 px-4 sm:px-6 max-w-7xl mx-auto flex-grow w-full">
+    
+    <div id="listView" class="view-transition view-visible">
+        </div>
+
+    <div id="artistProfileView" class="view-transition view-hidden">
+        <div class="max-w-4xl mx-auto py-4">
+            <button onclick="backToList()" class="mb-8 flex items-center gap-2 bg-purple-900/20 hover:bg-purple-600 border border-purple-500/50 text-white px-6 py-3 rounded-full font-title text-[10px] tracking-[0.2em] transition-all duration-300 group">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="group-hover:-translate-x-1 transition-transform"><path d="m15 18-6-6 6-6"/></svg>
+                VOLTAR PARA ARTISTAS
+            </button>
+
+            <div id="profileContent">
+                </div>
+        </div>
+    </div>
+
+</main>
                 <!-- Perfil dinâmico -->
             </div>
         </div>
@@ -258,57 +274,54 @@
         }
 
         function showArtist(id) {
-            const artist = artists.find(a => a.id === id);
-            if(!artist) return;
+    const artist = artists.find(a => a.id === id);
+    if(!artist) return;
 
-            profileContent.innerHTML = `
-                <div class="flex flex-col lg:flex-row gap-8 items-center lg:items-start animate-fade-in px-2">
-                    <div class="w-full max-w-[320px] lg:w-1/3">
-                        <img src="${artist.img}" class="w-full rounded-2xl border-2 border-purple-600 shadow-xl mb-6">
-                        <div class="flex flex-col gap-3">
-                            <a href="https://instagram.com/${artist.handle.includes('@') ? artist.handle.split(' ')[0].replace('@','') : ''}" target="_blank" 
-                               class="bg-gradient-to-r from-[#f09433] via-[#dc2743] to-[#bc1888] py-3 rounded-xl text-center font-title text-[10px] transition uppercase tracking-widest font-bold text-white shadow-lg">
-                                INSTAGRAM
-                            </a>
-                            <a href="${artist.spotify !== '#' ? artist.spotify : 'https://open.spotify.com'}" target="_blank" 
-                               class="bg-[#1DB954] hover:bg-[#1ed760] py-3 rounded-xl text-center font-title text-[10px] text-black transition uppercase tracking-widest font-bold shadow-lg">
-                                OUVIR NO SPOTIFY
-                            </a>
-                        </div>
+    // Renderiza apenas o conteúdo do artista, sem o botão de voltar (que agora está fixo no HTML acima)
+    profileContent.innerHTML = `
+        <div class="flex flex-col lg:flex-row gap-8 items-center lg:items-start animate-fade-in px-2">
+            <div class="w-full max-w-[320px] lg:w-1/3">
+                <img src="${artist.img}" class="w-full rounded-2xl border-2 border-purple-600 shadow-xl mb-6">
+                <div class="flex flex-col gap-3">
+                    <a href="https://instagram.com/${artist.handle.includes('@') ? artist.handle.split(' ')[0].replace('@','') : ''}" target="_blank" 
+                       class="bg-gradient-to-r from-[#f09433] via-[#dc2743] to-[#bc1888] py-3 rounded-xl text-center font-title text-[10px] transition uppercase tracking-widest font-bold text-white shadow-lg hover:scale-105">
+                        INSTAGRAM
+                    </a>
+                    <a href="${artist.spotify !== '#' ? artist.spotify : 'https://open.spotify.com'}" target="_blank" 
+                       class="bg-[#1DB954] hover:bg-[#1ed760] py-3 rounded-xl text-center font-title text-[10px] text-black transition uppercase tracking-widest font-bold shadow-lg hover:scale-105">
+                        OUVIR NO SPOTIFY
+                    </a>
+                </div>
+            </div>
+
+            <div class="w-full lg:w-2/3 text-center lg:text-left">
+                <span class="text-purple-500 font-title text-xs tracking-[0.3em] uppercase">${artist.genre}</span>
+                <h2 class="text-4xl sm:text-6xl lg:text-7xl font-title mt-2 mb-6 neon-text leading-tight">${artist.name}</h2>
+                <div class="text-gray-300 text-base sm:text-lg mb-8 border-l-2 border-purple-600 pl-6 leading-relaxed">
+                    ${artist.bio}
+                </div>
+                
+                <div class="bg-purple-900/10 border border-purple-900/30 p-4 sm:p-6 rounded-2xl mb-8">
+                    <h4 class="font-title text-[10px] mb-4 text-purple-400 tracking-widest uppercase">Escutar prévia oficial</h4>
+                    <div class="rounded-xl overflow-hidden">
+                        <iframe style="border-radius:12px" 
+                                src="https://open.spotify.com/embed/playlist/19Vn0fbpobiwLT7U3CcALp?utm_source=generator&theme=0" 
+                                width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
+                        </iframe>
                     </div>
+                </div>
+            </div>
+        </div>`;
 
-                    <div class="w-full lg:w-2/3 text-center lg:text-left">
-                        <span class="text-purple-500 font-title text-xs tracking-[0.3em] uppercase">${artist.genre}</span>
-                        <h2 class="text-4xl sm:text-6xl lg:text-7xl font-title mt-2 mb-6 neon-text leading-tight">${artist.name}</h2>
-                        <div class="text-gray-300 text-base sm:text-lg mb-8 border-l-2 border-purple-600 pl-6 leading-relaxed">
-                            ${artist.bio}
-                        </div>
-                        
-                        <div class="bg-purple-900/10 border border-purple-900/30 p-4 sm:p-6 rounded-2xl mb-8">
-                            <h4 class="font-title text-[10px] mb-4 text-purple-400 tracking-widest uppercase">Escutar prévia oficial</h4>
-                            <div class="rounded-xl overflow-hidden">
-                                <iframe style="border-radius:12px" 
-                                        src="https://open.spotify.com/embed/playlist/19Vn0fbpobiwLT7U3CcALp?utm_source=generator&theme=0" 
-                                        width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
-                                </iframe>
-                            </div>
-                        </div>
+    listView.classList.remove('view-visible');
+    listView.classList.add('view-hidden');
+    
+    setTimeout(() => {
+        profileView.classList.remove('view-hidden');
+        profileView.classList.add('view-visible');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 400);
 
-                        <button onclick="backToList()" class="font-title text-[10px] tracking-widest text-gray-500 hover:text-white transition flex items-center gap-3 mx-auto lg:mx-0 group">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="group-hover:-translate-x-1 transition-transform"><path d="m15 18-6-6 6-6"/></svg>
-                            VOLTAR PARA LISTA
-                        </button>
-                    </div>
-                </div>`;
-
-            listView.classList.remove('view-visible');
-            listView.classList.add('view-hidden');
-            
-            setTimeout(() => {
-                profileView.classList.remove('view-hidden');
-                profileView.classList.add('view-visible');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }, 400);
         }
 
         function backToList() {
