@@ -131,6 +131,25 @@
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+/* Animação de movimento do degradê */
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.animated-gradient {
+    background-size: 200% 200% !important;
+    animation: gradientMove 3s ease infinite;
+}
+
+/* Efeito específico para o Spotify para manter o verde vibrante */
+.spotify-animated {
+    background: linear-gradient(270deg, #1DB954, #1ed760, #128c3e, #1DB954);
+    background-size: 200% 200%;
+    animation: gradientMove 3s ease infinite;
+}
         
     </style>
 </head>
@@ -211,10 +230,12 @@
 
         // --- DADOS DOS ARTISTAS ---
         const artists = [
+            { id: 'secret1', name: 'SURPRESA #1', handle: '???', genre: 'Trap', img: 'https://i.postimg.cc/fyNSf8yP/alien-lp.jpg', bio: 'Atração secreta a ser revelada em breve.', spotify: 'https://open.spotify.com' },
+            { id: 'secret2', name: 'SURPRESA #2', handle: '???', genre: 'Trap', img: 'https://i.postimg.cc/fyNSf8yP/alien-lp.jpg', bio: 'Atração secreta a ser revelada em breve.', spotify: 'https://open.spotify.com' },
             { id: 'mnar', name: 'Mnar', handle: '@mnar_podium', genre: 'Trap', img: 'https://i.postimg.cc/rF961vzr/mnar_minha_area_no_podium_estacao_trap_evento_campinas_line_up_festival.jpg', bio: 'Energia caótica e rimas rápidas. Um dos pilares do trap campineiro.', spotify: 'https://open.spotify.com/intl-pt/track/1wPgt8BuL2P9DyzilSfAH8' },
             { id: 'cabarajo', name: 'Cabarajo', handle: '@cabarajo', genre: 'Trap', img: 'https://i.postimg.cc/02CgYLrS/cabarajo_estacao_trap_evento_campinas_line_up_festival.jpg', bio: 'Trap regional com influências de funk e soul.', spotify: 'https://open.spotify.com/intl-pt/artist/1bPJvJOKfKD7giIoTRWTfN' },
             { id: 'dgr', name: 'DGR', handle: '@diretamentedeumguardaroupa', genre: 'Trap', img: 'https://i.postimg.cc/3xrsnnDf/dgr_estacao_trap_evento_campinas_line_up_festival.jpg', bio: 'O rei do Sad Trap na região 019.', spotify: 'https://open.spotify.com' },
-            { id: 'omg', name: 'OMG Gang', handle: '@_omgang_oficial', genre: 'Trap', img: 'https://i.postimg.cc/g2cCNN6s/omg_gang_estacao_trap_evento_campinas_line_up_festival.jpg', bio: 'Coletivo pesado que traz a vivência das ruas para o palco.', spotify: 'https://open.spotify.com' },
+            { id: 'omg', name: 'OMG Gang', handle: '@_omgang_oficial', genre: 'Trap', img: 'https://i.postimg.cc/g2cCNN6s/omg_gang_estacao_trap_evento_campinas_line_up_festival.jpg', bio: 'OMGANG 🔥 Após a criação da Batalha da OMG, foi criado um segundo grupo artístico formado por artistas da Comunidade OMG (Oziel, Monte Cristo e Gleba B), junto com os próprios criadores. Com vertentes do Hip-Hop, Reggae e Funk, o intuito do grupo é trazer paz, alegria e união para dentro e fora das periferias. O som é espiritual para soldados de rua, o som pode ser um bote salva-vidas em um oceano, o som pode ser aquela brisa leve da manhã. Escolha a sua e se divirta.', spotify: 'https://open.spotify.com' },
             { id: 'yuridimc', name: 'Dj Yuridimc', handle: '@yuridimc', genre: 'Funk', img: 'https://i.postimg.cc/kgM0fftj/dj_yuri_dimc_estacao_trap_evento_campinas_line_up_festival.jpg', bio: 'O melhor do Funk 150BPM misturado com beats de trap.', spotify: 'https://open.spotify.com' },
             { id: 'agos', name: 'Os Agôs', handle: '@tavares.ago', genre: 'Trap', img: 'https://i.postimg.cc/hP0FLHhX/os_ago_estacao_trap_evento_campinas_line_up_festival.jpg', bio: 'Ancestralidade e batidas futuristas.', spotify: 'https://open.spotify.com' },
             { id: 'bs', name: 'Bs Little', handle: '@bs.little', genre: 'Trap', img: 'https://i.postimg.cc/jdhVHGCP/bs_little_estacao_trap_evento_campinas_line_up_festival.jpg', bio: 'Plug star em ascensão.', spotify: 'https://open.spotify.com/intl-pt/artist/2ll445UIH1pnQqSKY6Izon' },
@@ -230,13 +251,11 @@
             { id: 'sophi', name: 'Sophi', handle: '@sophiofc._', genre: 'R&B', img: 'https://i.postimg.cc/Dwf9BBbQ/sophi_mc_estacao_trap_evento_campinas_line_up_festival.jpg', bio: 'Vocal Power e presença de palco.', spotify: 'https://open.spotify.com/intl-pt/artist/3LvFttqHKXHC1pnG4zugzW' },
             { id: 'slin', name: 'Slin', handle: '@o_slin1', genre: 'Trap', img: 'https://i.postimg.cc/X7gMfTXB/slin_estacao_trap_evento_campinas_line_up_festival.jpg', bio: 'Glitchcore e Trap alternativo.', spotify: 'https://open.spotify.com/intl-pt/artist/7MSdxuMXLQbujajEnT3qvF' },
             { id: 'noisqta', name: 'Noisqta', handle: '@noisqtainc', genre: 'Trap', img: 'https://i.postimg.cc/FHFMDDJW/noisqta_estacao_trap_evento_campinas_line_up_festival.jpg', bio: 'União e rima na Estação.', spotify: 'https://open.spotify.com' },
-            { id: 'djvs', name: 'Dj VS', handle: '@dj.vs_ofc', genre: 'DJ', img: 'https://i.postimg.cc/XYNRQQy8/dj_vs_estacao_trap_evento_campinas_line_up_festival.jpg', bio: 'Atmosfera e graves profundos.', spotify: 'https://open.spotify.com/'},
-            { id: 'vgomes', name: 'Viniseven & Gomesz', handle: '@vinisevenn @gomesz', genre: 'Trap', img: 'https://i.postimg.cc/L6VdtrhT/viniseven_gomezs_estacao_trap_evento_campinas_line_up_festival.jpg', bio: 'A dupla que está dominando o flow dinâmico.', spotify: 'https://open.spotify.com' },
+            { id: 'lust', name: 'Lustboy', handle: '@omeninoluxuria', genre: 'Trap', img: 'https://i.postimg.cc/4x4DBBhp/lustboy_estacao_trap_evento_campinas_line_up_festival.jpg', bio: 'Nascido e criado na 019, Lustboy é um discurso fluente, elegante, persuasivo e contundente, que convence o público. Um talento natural, aprimorado pelo conhecimento das ruas.', spotify: 'https://open.spotify.com' },
+            { id: 'vgomes', name: 'Viniseven & Gomesz', handle: '@vinisevenn', handle2: '@gomesz', genre: 'Trap', img: 'https://i.postimg.cc/L6VdtrhT/viniseven_gomezs_estacao_trap_evento_campinas_line_up_festival.jpg', bio: 'A dupla que está dominando o flow dinâmico.', spotify: 'https://open.spotify.com' },
             { id: 'brilho', name: 'Brilho', handle: '@briilhoo', genre: 'Funk', img: 'https://i.postimg.cc/5NmcBZjp/brilho_estacao_trap_evento_campinas_line_up_festival.jpg', bio: 'Trap Funk carregado de energia.', spotify: 'https://open.spotify.com' },
             { id: 'joana', name: 'Joana Black', handle: '@joanaablack', genre: 'R&B', img: 'https://i.postimg.cc/4N1C6rnB/joana_black_estacao_trap_evento_campinas_line_up_festival.jpg', bio: 'Soul Trap com classe e atitude.', spotify: 'https://open.spotify.com' },
-            { id: 'lust', name: 'Lustboy', handle: '@omeninoluxuria', genre: 'Trap', img: 'https://i.postimg.cc/4x4DBBhp/lustboy_estacao_trap_evento_campinas_line_up_festival.jpg', bio: 'Dark Trap e vivências intensas.', spotify: 'https://open.spotify.com' },
-            { id: 'secret1', name: 'SURPRESA #1', handle: '???', genre: 'Trap', img: 'https://i.postimg.cc/fyNSf8yP/alien-lp.jpg', bio: 'Atração secreta a ser revelada em breve.', spotify: 'https://open.spotify.com' },
-            { id: 'secret2', name: 'SURPRESA #2', handle: '???', genre: 'Trap', img: 'https://i.postimg.cc/fyNSf8yP/alien-lp.jpg', bio: 'Atração secreta a ser revelada em breve.', spotify: 'https://open.spotify.com' }
+            { id: 'djvs', name: 'Dj VS', handle: '@dj.vs_ofc', genre: 'DJ', img: 'https://i.postimg.cc/XYNRQQy8/dj_vs_estacao_trap_evento_campinas_line_up_festival.jpg', bio: 'Atmosfera e graves profundos.', spotify: 'https://open.spotify.com/'}
         ];
 
         const artistGrid = document.getElementById('artistGrid');
@@ -276,52 +295,64 @@
         }
 
     function showArtist(id) {
-            const artist = artists.find(a => a.id === id);
-            if(!artist) return;
+    const artist = artists.find(a => a.id === id);
+    if(!artist) return;
 
-            // Insere o conteúdo dinâmico do artista
-            profileContent.innerHTML = `
-                <div class="flex flex-col lg:flex-row gap-8 items-center lg:items-start animate-fade-in px-2">
-                    <div class="w-full max-w-[350px] lg:w-1/3">
-                        <div class="relative group">
-                            <img src="${artist.img}" class="w-full rounded-2xl border-2 border-purple-600 shadow-[0_0_20px_rgba(164,0,255,0.3)] mb-6">
-                            <div class="absolute -bottom-2 -right-2 bg-purple-600 p-2 rounded-lg">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                            </div>
-                        </div>
-                        <div class="flex flex-col gap-3 mt-4">
-                            <a href="https://instagram.com/${artist.handle.replace('@','')}" target="_blank" 
-                               class="bg-gradient-to-r from-[#f09433] via-[#dc2743] to-[#bc1888] py-4 rounded-xl text-center font-title text-[10px] transition uppercase tracking-widest font-bold text-white shadow-lg hover:scale-105 active:scale-95">
-                                SEGUIR NO INSTAGRAM
-                            </a>
-                        </div>
+    // Conteúdo dinâmico do perfil
+    profileContent.innerHTML = `
+        <div class="flex flex-col lg:flex-row gap-8 items-center lg:items-start animate-fade-in px-2">
+            <div class="w-full max-w-[350px] lg:w-1/3">
+                <div class="relative group">
+                    <img src="${artist.img}" class="w-full rounded-2xl border-2 border-purple-600 shadow-[0_0_20px_rgba(164,0,255,0.3)] mb-6">
+                </div>
+                
+                // Trecho dos botões dentro do profileContent.innerHTML:
+
+<div class="flex flex-col gap-3 mt-4">
+    <a href="https://instagram.com/${artist.handle.replace('@','')}" target="_blank" 
+       class="animated-gradient bg-gradient-to-r from-[#f09433] via-[#dc2743] to-[#bc1888] py-4 rounded-xl text-center font-title text-[10px] transition uppercase tracking-widest font-bold text-white shadow-lg hover:scale-105 active:scale-95">
+        SEGUIR ${artist.handle.toUpperCase()}
+    </a>
+
+    ${artist.handle2 ? `
+    <a href="https://instagram.com/${artist.handle2.replace('@','')}" target="_blank" 
+       class="animated-gradient bg-gradient-to-r from-[#f09433] via-[#dc2743] to-[#bc1888] py-4 rounded-xl text-center font-title text-[10px] transition uppercase tracking-widest font-bold text-white shadow-lg hover:scale-105 active:scale-95">
+        SEGUIR ${artist.handle2.toUpperCase()}
+    </a>
+    ` : ''}
+
+    <a href="${artist.spotify}" target="_blank" 
+       class="spotify-animated py-4 rounded-xl text-center font-title text-[10px] text-black transition uppercase tracking-widest font-bold shadow-lg hover:scale-105 active:scale-95 mt-1">
+        OUVIR NO SPOTIFY
+    </a>
+</div>
+            </div>
+
+            <div class="w-full lg:w-2/3 text-center lg:text-left">
+                <span class="text-purple-500 font-title text-xs tracking-[0.3em] uppercase">${artist.genre}</span>
+                <h2 class="text-4xl sm:text-7xl font-title mt-2 mb-6 neon-text leading-tight">${artist.name}</h2>
+                <div class="text-gray-300 text-base sm:text-lg mb-8 border-l-2 border-purple-600 pl-6 leading-relaxed italic">
+                    "${artist.bio}"
+                </div>
+                
+                <div class="bg-purple-900/10 border border-purple-900/30 p-6 rounded-2xl">
+                    <h4 class="font-title text-[10px] mb-4 text-purple-400 tracking-widest uppercase text-center lg:text-left">Sintonize na Estação</h4>
+                    <div class="rounded-xl overflow-hidden shadow-2xl">
+                        <iframe style="border-radius:12px" 
+                                src="${artist.spotify.includes('spotify.com') ? artist.spotify.replace('/track/', '/embed/track/').replace('/artist/', '/embed/artist/').replace('/album/', '/embed/album/') : 'https://open.spotify.com/embed/playlist/37i9dQZF1DX6G9S9D6367A'}" 
+                                width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
+                        </iframe>
                     </div>
+                </div>
+            </div>
+        </div>`;
 
-                    <div class="w-full lg:w-2/3 text-center lg:text-left">
-                        <span class="text-purple-500 font-title text-xs tracking-[0.3em] uppercase">${artist.genre}</span>
-                        <h2 class="text-4xl sm:text-7xl font-title mt-2 mb-6 neon-text leading-tight">${artist.name}</h2>
-                        <div class="text-gray-300 text-base sm:text-lg mb-8 border-l-2 border-purple-600 pl-6 leading-relaxed italic">
-                            "${artist.bio}"
-                        </div>
-                        
-                        <div class="bg-purple-900/10 border border-purple-900/30 p-6 rounded-2xl">
-                            <h4 class="font-title text-[10px] mb-4 text-purple-400 tracking-widest uppercase text-center lg:text-left">Sintonize na Estação</h4>
-                            <div class="rounded-xl overflow-hidden shadow-2xl">
-                                <iframe style="border-radius:12px" 
-                                        src="https://open.spotify.com/embed/track/2S8A9YmU70hIu9bHIsDmsI?utm_source=generator&theme=0" 
-                                        width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
-                                </iframe>
-                            </div>
-                        </div>
-                    </div>
-                </div>`;
-
-            // Troca de visualização
-            listView.classList.replace('view-visible', 'view-hidden');
-            profileView.classList.replace('view-hidden', 'view-visible');
-            
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+    // Troca de visualização para o perfil
+    listView.classList.replace('view-visible', 'view-hidden');
+    profileView.classList.replace('view-hidden', 'view-visible');
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
         function backToList() {
             profileView.classList.replace('view-visible', 'view-hidden');
