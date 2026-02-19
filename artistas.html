@@ -117,6 +117,20 @@
         #chat-input { background: #15151a; border: 1px solid #333; border-radius: 20px; padding: 6px 15px; color: white; flex: 1; outline: none; font-size: 0.85rem; }
         #chat-input:focus { border-color: var(--color-purple-neon); }
 
+        /* Ajuste para evitar o scroll infinito e espaços vazios */
+.view-hidden { 
+    display: none; /* Em vez de apenas opacity 0 */
+}
+
+.view-visible { 
+    display: block; 
+    animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
         
     </style>
 </head>
@@ -137,30 +151,24 @@
     </nav>
 
     <!-- Conteúdo Principal -->
-    <main class="pt-24 pb-12 px-4 sm:px-6 max-w-7xl mx-auto flex-grow w-full">
-        
-        <div id="listView" class="view-transition view-visible">
-            <header class="text-center mb-8 sm:mb-12">
-                <h1 class="text-3xl md:text-6xl font-title mb-4 leading-tight">OS DONOS DA <span class="neon-text">ESTAÇÃO</span></h1>
-                <p class="text-gray-400 max-w-2xl mx-auto text-sm sm:text-base px-2 text-center">Consulte o lineup completo do evento que conecta o underground ao universo em Campinas.</p>
-            </header>
-
-            <div class="flex justify-center mb-10">
-                <div class="relative w-full max-w-md">
-                    <input type="text" id="artistSearch" placeholder="Procurar artista..." class="w-full bg-black/50 border border-purple-900/50 rounded-full px-6 py-3 text-sm focus:outline-none focus:border-purple-500 transition placeholder:text-gray-600 shadow-lg shadow-purple-900/10 clickable">
-                    <svg class="absolute right-5 top-3.5 text-gray-600" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-                </div>
-            </div>
-
-            <div id="artistGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-6">
-                <!-- Artistas via JS -->
-            </div>
-        </div>
-
-        <main class="pt-24 pb-12 px-4 sm:px-6 max-w-7xl mx-auto flex-grow w-full">
+    <main class="pt-24 pb-12 px-4 sm:px-6 max-w-7xl mx-auto flex-grow w-full relative">
     
     <div id="listView" class="view-transition view-visible">
+        <header class="text-center mb-8 sm:mb-12">
+            <h1 class="text-3xl md:text-6xl font-title mb-4 leading-tight">OS DONOS DA <span class="neon-text">ESTAÇÃO</span></h1>
+            <p class="text-gray-400 max-w-2xl mx-auto text-sm sm:text-base px-2 text-center">Consulte o lineup completo do evento que conecta o underground ao universo em Campinas.</p>
+        </header>
+
+        <div class="flex justify-center mb-10">
+            <div class="relative w-full max-w-md">
+                <input type="text" id="artistSearch" placeholder="Procurar artista..." class="w-full bg-black/50 border border-purple-900/50 rounded-full px-6 py-3 text-sm focus:outline-none focus:border-purple-500 transition placeholder:text-gray-600 shadow-lg shadow-purple-900/10 clickable">
+                <svg class="absolute right-5 top-3.5 text-gray-600" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            </div>
         </div>
+
+        <div id="artistGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-6">
+            </div>
+    </div>
 
     <div id="artistProfileView" class="view-transition view-hidden">
         <div class="max-w-4xl mx-auto py-4">
@@ -173,13 +181,7 @@
                 </div>
         </div>
     </div>
-
 </main>
-                <!-- Perfil dinâmico -->
-            </div>
-        </div>
-
-    </main>
 
     <!-- Rodapé da Página -->
     <footer class="w-full bg-black/95 border-t border-purple-900/30 py-10 mt-12 relative z-10">
@@ -273,65 +275,58 @@
             `).join('');
         }
 
-        function showArtist(id) {
-    const artist = artists.find(a => a.id === id);
-    if(!artist) return;
+    function showArtist(id) {
+            const artist = artists.find(a => a.id === id);
+            if(!artist) return;
 
-    // Renderiza apenas o conteúdo do artista, sem o botão de voltar (que agora está fixo no HTML acima)
-    profileContent.innerHTML = `
-        <div class="flex flex-col lg:flex-row gap-8 items-center lg:items-start animate-fade-in px-2">
-            <div class="w-full max-w-[320px] lg:w-1/3">
-                <img src="${artist.img}" class="w-full rounded-2xl border-2 border-purple-600 shadow-xl mb-6">
-                <div class="flex flex-col gap-3">
-                    <a href="https://instagram.com/${artist.handle.includes('@') ? artist.handle.split(' ')[0].replace('@','') : ''}" target="_blank" 
-                       class="bg-gradient-to-r from-[#f09433] via-[#dc2743] to-[#bc1888] py-3 rounded-xl text-center font-title text-[10px] transition uppercase tracking-widest font-bold text-white shadow-lg hover:scale-105">
-                        INSTAGRAM
-                    </a>
-                    <a href="${artist.spotify !== '#' ? artist.spotify : 'https://open.spotify.com'}" target="_blank" 
-                       class="bg-[#1DB954] hover:bg-[#1ed760] py-3 rounded-xl text-center font-title text-[10px] text-black transition uppercase tracking-widest font-bold shadow-lg hover:scale-105">
-                        OUVIR NO SPOTIFY
-                    </a>
-                </div>
-            </div>
-
-            <div class="w-full lg:w-2/3 text-center lg:text-left">
-                <span class="text-purple-500 font-title text-xs tracking-[0.3em] uppercase">${artist.genre}</span>
-                <h2 class="text-4xl sm:text-6xl lg:text-7xl font-title mt-2 mb-6 neon-text leading-tight">${artist.name}</h2>
-                <div class="text-gray-300 text-base sm:text-lg mb-8 border-l-2 border-purple-600 pl-6 leading-relaxed">
-                    ${artist.bio}
-                </div>
-                
-                <div class="bg-purple-900/10 border border-purple-900/30 p-4 sm:p-6 rounded-2xl mb-8">
-                    <h4 class="font-title text-[10px] mb-4 text-purple-400 tracking-widest uppercase">Escutar prévia oficial</h4>
-                    <div class="rounded-xl overflow-hidden">
-                        <iframe style="border-radius:12px" 
-                                src="https://open.spotify.com/embed/playlist/19Vn0fbpobiwLT7U3CcALp?utm_source=generator&theme=0" 
-                                width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
-                        </iframe>
+            // Insere o conteúdo dinâmico do artista
+            profileContent.innerHTML = `
+                <div class="flex flex-col lg:flex-row gap-8 items-center lg:items-start animate-fade-in px-2">
+                    <div class="w-full max-w-[350px] lg:w-1/3">
+                        <div class="relative group">
+                            <img src="${artist.img}" class="w-full rounded-2xl border-2 border-purple-600 shadow-[0_0_20px_rgba(164,0,255,0.3)] mb-6">
+                            <div class="absolute -bottom-2 -right-2 bg-purple-600 p-2 rounded-lg">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-3 mt-4">
+                            <a href="https://instagram.com/${artist.handle.replace('@','')}" target="_blank" 
+                               class="bg-gradient-to-r from-[#f09433] via-[#dc2743] to-[#bc1888] py-4 rounded-xl text-center font-title text-[10px] transition uppercase tracking-widest font-bold text-white shadow-lg hover:scale-105 active:scale-95">
+                                SEGUIR NO INSTAGRAM
+                            </a>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>`;
 
-    listView.classList.remove('view-visible');
-    listView.classList.add('view-hidden');
-    
-    setTimeout(() => {
-        profileView.classList.remove('view-hidden');
-        profileView.classList.add('view-visible');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 400);
+                    <div class="w-full lg:w-2/3 text-center lg:text-left">
+                        <span class="text-purple-500 font-title text-xs tracking-[0.3em] uppercase">${artist.genre}</span>
+                        <h2 class="text-4xl sm:text-7xl font-title mt-2 mb-6 neon-text leading-tight">${artist.name}</h2>
+                        <div class="text-gray-300 text-base sm:text-lg mb-8 border-l-2 border-purple-600 pl-6 leading-relaxed italic">
+                            "${artist.bio}"
+                        </div>
+                        
+                        <div class="bg-purple-900/10 border border-purple-900/30 p-6 rounded-2xl">
+                            <h4 class="font-title text-[10px] mb-4 text-purple-400 tracking-widest uppercase text-center lg:text-left">Sintonize na Estação</h4>
+                            <div class="rounded-xl overflow-hidden shadow-2xl">
+                                <iframe style="border-radius:12px" 
+                                        src="https://open.spotify.com/embed/track/2S8A9YmU70hIu9bHIsDmsI?utm_source=generator&theme=0" 
+                                        width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
+                                </iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
 
+            // Troca de visualização
+            listView.classList.replace('view-visible', 'view-hidden');
+            profileView.classList.replace('view-hidden', 'view-visible');
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function backToList() {
-            profileView.classList.remove('view-visible');
-            profileView.classList.add('view-hidden');
-            
-            setTimeout(() => {
-                listView.classList.remove('view-hidden');
-                listView.classList.add('view-visible');
-            }, 400);
+            profileView.classList.replace('view-visible', 'view-hidden');
+            listView.classList.replace('view-hidden', 'view-visible');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         document.getElementById('artistSearch').addEventListener('input', (e) => renderGrid(e.target.value));
