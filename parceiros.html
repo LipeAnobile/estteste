@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parceiros | Estação Trap_019</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600&family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --color-purple-neon: #a400ff;
+            --color-purple-dark: #7a00ff;
+            --color-bg: #050505;
+            --font-title: 'Orbitron', sans-serif;
+            --font-text: 'Exo 2', sans-serif;
+        }
+
+        body {
+            background-color: var(--color-bg);
+            color: #E3E3E3;
+            font-family: var(--font-text);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Fundo Estrelado */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%; z-index: -10; 
+            background-image: 
+                linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.95)),
+                url(https://www.transparenttextures.com/patterns/stardust.png);
+            pointer-events: none;
+        }
+
+        h1, h2, h3, .font-title { font-family: var(--font-title); text-transform: uppercase; }
+        
+        .neon-text { 
+            color: var(--color-purple-neon); 
+            text-shadow: 0 0 10px var(--color-purple-neon), 0 0 20px var(--color-purple-dark); 
+        }
+
+        .cta-hero-button {
+            background-color: var(--color-purple-neon);
+            color: white;
+            box-shadow: 0 0 20px rgba(164, 0, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+        .cta-hero-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(164, 0, 255, 0.8);
+            background-color: #b526ff;
+        }
+
+        /* Inversão apenas em Desktop */
+        @media (min-width: 1024px) {
+            .partner-section:nth-child(even) .flex-container {
+                flex-direction: row-reverse;
+            }
+        }
+
+        .img-glow {
+            transition: all 0.5s ease;
+            filter: grayscale(40%);
+        }
+        .img-glow:hover {
+            filter: grayscale(0%);
+            box-shadow: 0 0 25px var(--color-purple-neon);
+            transform: scale(1.02);
+        }
+
+        .instagram-button {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            color: white; border: none; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .instagram-button:hover { transform: translateY(-3px); box-shadow: 0 10px 20px -5px rgba(220, 39, 67, 0.4); }
+
+        /* Animação de fade-in */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--color-purple-neon);
+            transition: width 0.3s;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .partner-anchor {
+            padding: 0.5rem 1rem;
+            border: 1px solid rgba(164, 0, 255, 0.3);
+            border-radius: 99px;
+            font-size: 0.75rem;
+            color: #aaa;
+            transition: all 0.3s ease;
+        }
+        .partner-anchor:hover {
+            border-color: var(--color-purple-neon);
+            color: white;
+            background: rgba(164, 0, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* --- ANIMAÇÃO DE MOVIMENTO (Copiar para o style de parceiros.html) --- */
+@keyframes movingGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.cta-animated {
+    background: linear-gradient(270deg, #a400ff, #ff00e5, #7a00ff, #240046);
+    background-size: 300% 300%;
+    animation: movingGradient 6s ease infinite;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: none !important; /* Remove bordas se houver */
+    color: white !important;
+}
+
+.cta-animated:hover {
+    transform: scale(1.05) translateY(-3px);
+    box-shadow: 0 15px 40px -5px rgba(164, 0, 255, 0.8);
+    filter: brightness(1.2);
+}
+
+/* Botão Instagram Animado (Cores do Insta) */
+.insta-animated {
+    background: linear-gradient(270deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    background-size: 300% 300%;
+    animation: movingGradient 5s ease infinite; /* Um pouco mais rápido para destacar */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s ease;
+    color: white !important;
+    border: none !important;
+}
+
+.cta-animated:hover, .insta-animated:hover {
+    transform: scale(1.05) translateY(-3px);
+    filter: brightness(1.1);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+    </style>
+</head>
+<body>
+
+    <!-- Navegação -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-md border-b border-purple-900/30">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex justify-between items-center">
+            <a href="index.html" class="font-title text-purple-400 hover:text-white transition flex items-center gap-2 group">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="group-hover:-translate-x-1 transition-transform"><path d="m15 18-6-6 6-6"/></svg>
+                <span class="text-xs sm:text-sm">VOLTAR</span>
+            </a>
+            <span class="font-title text-[10px] sm:text-lg tracking-widest neon-text">UNIVERSO_PARCEIRO</span>
+            <div class="w-8 sm:w-10"></div>
+        </div>
+    </nav>
+
+    <!-- HERO PARA NOVOS PARCEIROS -->
+    <header class="pt-32 sm:pt-48 pb-20 sm:pb-32 text-center px-4 relative overflow-hidden">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-purple-600/20 blur-[120px] rounded-full -z-10"></div>
+        
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-4xl md:text-7xl font-bold ">SUA MARCA NA ESTAÇÃO TRAP 019</h1>
+            <p class="text-gray-300 max-w-2xl mx-auto text-base sm:text-lg mb-10 leading-relaxed">
+                Conecte sua empresa ao maior movimento de trap e cultura urbana da região. Alcance milhares de jovens e fortaleça a cena de Campinas.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a href="#comercial" class="cta-animated px-10 py-4 rounded-full font-title text-sm tracking-widest uppercase font-bold w-full sm:w-auto text-center">
+    QUERO SER PARCEIRO
+</a>
+                
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-6 pb-24 space-y-20 sm:space-y-32">
+        
+        <div class="text-center">
+            <span class="text-purple-400 font-title text-[10px] sm:text-xs tracking-[0.5em] uppercase">Ecossistema atual</span>
+            <h2 class="text-2xl sm:text-4xl font-bold text-white mt-4">QUEM JÁ ESTÁ CONOSCO</h2>
+            
+            <!-- LINKS DE NAVEGAÇÃO RÁPIDA -->
+            <div class="flex flex-wrap justify-center gap-3 mt-8 max-w-2xl mx-auto">
+                <a href="#guida" class="partner-anchor font-title">Guida Calixto</a>
+                <a href="#callidus" class="partner-anchor font-title">Callidus WRLD</a>
+                <a href="#tigresinhas" class="partner-anchor font-title">Tigresinhas</a>
+                <a href="#dommarco" class="partner-anchor font-title">Dom Marco</a>
+                <a href="#beco" class="partner-anchor font-title">Beco Studio</a>
+                <a href="#akemi" class="partner-anchor font-title">Akemi No Mori</a>
+            </div>
+        </div>
+
+        <!-- PARCEIRO 1: GUIDA CALIXTO -->
+        <section id="guida" class="partner-section reveal scroll-mt-24">
+            <div class="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center flex-container">
+                <div class="w-full lg:w-1/2 space-y-4 sm:space-y-6">
+                    <div class="flex items-center gap-4">
+                        <img src="https://i.postimg.cc/GhKFb28g/guida-calixto-politica-estacao-trap-parceria.jpg" alt="Guida Logo" class="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-purple-500 shadow-lg shadow-purple-500/20 object-cover">
+                        <div>
+                            <h2 class="text-2xl sm:text-3xl font-bold text-white leading-tight">Guida Calixto</h2>
+                            <p class="text-purple-400 font-title text-[10px] sm:text-xs tracking-widest">Vereadora</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 sm:text-gray-300 text-base sm:text-lg leading-relaxed">
+                        Guida Calixto é vereadora do PT em Campinas, educadora, advogada e sindicalista, com atuação na defesa dos direitos trabalhistas e da justiça social. Eleita em 2020 com 3.645 votos, seu mandato promove igualdade social por meio de grupos de trabalho em áreas como educação, saúde, antirracismo, gênero e meio ambiente.
+                    </p>
+                    <a href="https://www.instagram.com/guidacalixtopt/" target="_blank" class="insta-animated px-6 py-3 sm:px-8 sm:py-4 rounded-xl font-title text-[10px] sm:text-xs w-full sm:w-fit">
+    INSTAGRAM
+</a>
+                </div>
+                <div class="w-full lg:w-1/2 grid grid-cols-2 gap-3 sm:gap-4">
+                    <img src="https://i.postimg.cc/RCLvqqrd/guida-calixto-politica-estacao-trap-parceria-2.jpg" class="w-full h-48 sm:h-64 object-cover rounded-2xl border border-white/10 img-glow" alt="Imagem Callidus 1">
+                    <img src="https://i.postimg.cc/FRc303b9/guida-calixto-politica-estacao-trap-parceria-3.jpg" class="w-full h-48 sm:h-64 object-cover rounded-2xl border border-white/10 img-glow" alt="Imagem Callidus 2">
+                    <div class="col-span-2">
+                        <img src="https://i.postimg.cc/7Pmjpz8X/guida-calixto-politica-estacao-trap-parceria-3.jpg" class="w-full h-40 sm:h-48 object-cover rounded-2xl border border-white/10 img-glow" alt="Imagem Callidus 3">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PARCEIRO 2: CALLIDUS WRLD -->
+        <section id="callidus" class="partner-section reveal scroll-mt-24">
+            <div class="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center flex-container">
+                <div class="w-full lg:w-1/2 space-y-4 sm:space-y-6">
+                    <div class="flex items-center gap-4">
+                        <img src="https://i.postimg.cc/CM3hdHDd/callidus-estacao-trap-parceria.jpg" alt="Callidus Logo" class="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-purple-500 shadow-lg shadow-purple-500/20 object-cover">
+                        <div>
+                            <h2 class="text-2xl sm:text-3xl font-bold text-white leading-tight">Callidus WRLD</h2>
+                            <p class="text-purple-400 font-title text-[10px] sm:text-xs tracking-widest">Streetwear & Culture</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 sm:text-gray-300 text-base sm:text-lg leading-relaxed">
+                        A Callidus é referência em moda streetwear em Campinas, trazendo peças exclusivas que conectam estilo e atitude urbana. No evento, a marca traz o "drop" oficial da Estação, unindo o asfalto à estética espacial.
+                    </p>
+                    <a href="https://www.instagram.com/calliduswrld/" target="_blank" class="insta-animated px-6 py-3 sm:px-8 sm:py-4 rounded-xl font-title text-[10px] sm:text-xs w-full sm:w-fit">
+    INSTAGRAM
+</a>
+                </div>
+                <div class="w-full lg:w-1/2 grid grid-cols-2 gap-3 sm:gap-4">
+                    <img src="https://i.postimg.cc/qBjG8YKQ/patrocinio-callidus.png" class="w-full h-48 sm:h-64 object-cover rounded-2xl border border-white/10 img-glow" alt="Imagem Callidus 1">
+                    <img src="https://i.postimg.cc/jjx5Q8Pc/Quando-NEATH-AND-CALLIDUS-CAP-DROP-Voces-decidem-nos-comentarios-a-data.jpg" class="w-full h-48 sm:h-64 object-cover rounded-2xl border border-white/10 img-glow" alt="Imagem Callidus 2">
+                    <div class="col-span-2">
+                        <img src="https://i.postimg.cc/bJ3DxgDq/callidus-estacao-trap-parceria-2.jpg" class="w-full h-40 sm:h-48 object-cover rounded-2xl border border-white/10 img-glow" alt="Imagem Callidus 3">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PARCEIRO 3: TIGRESINHAS -->
+        <section id="tigresinhas" class="partner-section reveal scroll-mt-24">
+            <div class="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center flex-container">
+                <div class="w-full lg:w-1/2 space-y-4 sm:space-y-6">
+                    <div class="flex items-center gap-4">
+                        <img src="https://i.postimg.cc/FRPv90vr/tigresinhas-estacao-trap-parceria.jpg" alt="Tigresinhas Logo" class="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-purple-500 shadow-lg shadow-purple-500/20 object-cover">
+                        <div>
+                            <h2 class="text-2xl sm:text-3xl font-bold text-white leading-tight">Tigresinhas</h2>
+                            <p class="text-purple-400 font-title text-[10px] sm:text-xs tracking-widest">Acessórios & Trend</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 sm:text-gray-300 text-base sm:text-lg leading-relaxed">
+                        Loja de acessórios e moda feminina focada em mulheres autênticas. As Tigresinhas trazem o brilho necessário para a estética do Trap, com coleções que variam do clássico urbano ao futurismo metalizado.
+                    </p>
+                    <a href="https://www.instagram.com/tigresinhaas/" target="_blank" class="insta-animated px-6 py-3 sm:px-8 sm:py-4 rounded-xl font-title text-[10px] sm:text-xs w-full sm:w-fit">
+                        INSTAGRAM
+                    </a>
+                </div>
+                <div class="w-full lg:w-1/2 grid grid-cols-2 gap-3 sm:gap-4">
+                    <img src="https://i.postimg.cc/8ccDj988/Gostosas-usam-tigresinhaas-FICHA-TECNICAAcessorios-tigresinhaas-Styling-producao-criativa-(1).jpg" class="w-full h-48 sm:h-64 object-cover rounded-2xl border border-white/10 img-glow" alt="Imagem Tigresinhas 1">
+                    <img src="https://i.postimg.cc/bry08dnW/tigresinhas-estacao-trap-parceria-3.jpg" class="w-full h-48 sm:h-64 object-cover rounded-2xl border border-white/10 img-glow" alt="Imagem Tigresinhas 2">
+                    <div class="col-span-2">
+                        <img src="https://i.postimg.cc/y8GzbvZN/Se-voce-nao-pegou-o-seu-so-voce-nao-tem-SEO-colar-Hello-Kitty-cravejado-dourado-prata-b.jpg" class="w-full h-40 sm:h-48 object-cover rounded-2xl border border-white/10 img-glow" alt="Imagem Tigresinhas 3">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PARCEIRO 4: BARBEARIA DOM MARCO -->
+        <section id="dommarco" class="partner-section reveal scroll-mt-24">
+            <div class="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center flex-container">
+                <div class="w-full lg:w-1/2 space-y-4 sm:space-y-6">
+                    <div class="flex items-center gap-4">
+                        <img src="https://i.postimg.cc/cHrG5WgG/dom-marcos.jpg" alt="Dom Marco Logo" class="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-purple-500 shadow-lg shadow-purple-500/20 object-cover">
+                        <div>
+                            <h2 class="text-2xl sm:text-3xl font-bold text-white leading-tight">Barbearia Dom Marco</h2>
+                            <p class="text-purple-400 font-title text-[10px] sm:text-xs tracking-widest">Lifestyle & Grooming</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 sm:text-gray-300 text-base sm:text-lg leading-relaxed">
+                        Corte, barba e resenha. A Dom Marco é o ponto de encontro de quem preza pelo visual impecável antes de subir ao palco ou curtir a Estação. Um ambiente clássico com a energia do trap 019.
+                    </p>
+                    <a href="https://www.instagram.com/barbearia_dommarco/" target="_blank" class="insta-animated px-6 py-3 sm:px-8 sm:py-4 rounded-xl font-title text-[10px] sm:text-xs w-full sm:w-fit">
+                        INSTAGRAM
+                    </a>
+                </div>
+                <div class="w-full lg:w-1/2 grid grid-cols-2 gap-3 sm:gap-4">
+                    <img src="https://i.postimg.cc/HWM4cx24/542932274-18056156477617787-5949519189802782757-n.jpg" class="w-full h-48 sm:h-64 object-cover rounded-2xl border border-white/10 img-glow" alt="Imagem Dom Marco 1">
+                    <img src="https://i.postimg.cc/76272sgY/Mais-um-Profissional-na-Equipe-Dom-Marco-Seja-Muito-Bem-Vindo-danilo-cavalcant-Que-pos.jpg" class="w-full h-48 sm:h-64 object-cover rounded-2xl border border-white/10 img-glow" alt="Imagem Dom Marco 2">
+                    <div class="col-span-2">
+                        <img src="https://i.postimg.cc/ZKLgryjD/barbearia-dom-marco-estacao-trap-parceria.jpg" class="w-full h-40 sm:h-48 object-cover rounded-2xl border border-white/10 img-glow" alt="Imagem Dom Marco 3">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PARCEIRO 5: BECO STUDIO -->
+        <section id="beco" class="partner-section reveal scroll-mt-24">
+            <div class="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center flex-container">
+                <div class="w-full lg:w-1/2 space-y-4 sm:space-y-6">
+                    <div class="flex items-center gap-4">
+                        <img src="https://i.postimg.cc/pVCLSW6L/beco-lp.jpg" alt="Beco Logo" class="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-purple-500 shadow-lg shadow-purple-500/20 object-cover">
+                        <div>
+                            <h2 class="text-2xl sm:text-3xl font-bold text-white leading-tight">Beco Studio</h2>
+                            <p class="text-purple-400 font-title text-[10px] sm:text-xs tracking-widest">Music Production</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 sm:text-gray-300 text-base sm:text-lg leading-relaxed">
+                        O laboratório onde os hits nascem. O Beco Studio é o braço técnico da Estação Trap_019, garantindo que a qualidade sonora do underground campineiro alcance níveis astronômicos.
+                    </p>
+                    <a href="https://www.instagram.com/beco.cia/" target="_blank" class="insta-animated px-6 py-3 sm:px-8 sm:py-4 rounded-xl font-title text-[10px] sm:text-xs w-full sm:w-fit">
+                        INSTAGRAM
+                    </a>
+                </div>
+                <div class="w-full lg:w-1/2 grid grid-cols-2 gap-3 sm:gap-4">
+                    <img src="https://i.postimg.cc/W1hm3fkX/beco-lp3.jpg" class="w-full h-48 sm:h-64 object-cover rounded-2xl border border-white/10 img-glow" alt="Imagem Beco 1">
+                    <img src="https://i.postimg.cc/mrdBV5j4/beco-studio-estacao-trap-parceria-3.jpg" class="w-full h-48 sm:h-64 object-cover rounded-2xl border border-white/10 img-glow" alt="Imagem Beco 2">
+                    <div class="col-span-2">
+                        <img src="https://i.postimg.cc/MTbV4CC6/beco-lp2.jpg" class="w-full h-40 sm:h-48 object-cover rounded-2xl border border-white/10 img-glow" alt="Imagem Beco 3">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PARCEIRO 6: AKEMI NO MORI -->
+        <section id="akemi" class="partner-section reveal scroll-mt-24">
+            <div class="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center flex-container">
+                <div class="w-full lg:w-1/2 space-y-4 sm:space-y-6">
+                    <div class="flex items-center gap-4">
+                        <img src="https://i.postimg.cc/DyX6FFQp/akemi-no-mori-estacao-trap-parceria.jpg" alt="Akemi Logo" class="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-purple-500 shadow-lg shadow-purple-500/20 object-cover">
+                        <div>
+                            <h2 class="text-2xl sm:text-3xl font-bold text-white leading-tight">Akemi No Mori</h2>
+                            <p class="text-purple-400 font-title text-[10px] sm:text-xs tracking-widest">Streetwear & Culture</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 sm:text-gray-300 text-base sm:text-lg leading-relaxed">
+                        A Akemi no Mori é uma marca autoral que une brechó, upcycling e expressão criativa para transformar peças únicas em identidade e estilo. Com estética alternativa e atitude urbana, a loja ressignifica roupas através da sustentabilidade, valorizando originalidade, cultura e autenticidade em cada criação.
+                    </p>
+                    <a href="https://www.instagram.com/akemi.nomori/" target="_blank" class="insta-animated px-6 py-3 sm:px-8 sm:py-4 rounded-xl font-title text-[10px] sm:text-xs w-full sm:w-fit">
+                        INSTAGRAM
+                    </a>
+                </div>
+                <div class="w-full lg:w-1/2 grid grid-cols-2 gap-3 sm:gap-4">
+                    <img src="https://i.postimg.cc/TwRfcXg5/akemi-no-mori-estacao-trap-parceria-2.jpg" class="w-full h-48 sm:h-64 object-cover rounded-2xl border border-white/10 img-glow" alt="Imagem Callidus 1">
+                    <img src="https://i.postimg.cc/B6sQwF91/akemi-no-mori-estacao-trap-parceria-3.jpg" class="w-full h-48 sm:h-64 object-cover rounded-2xl border border-white/10 img-glow" alt="Imagem Callidus 2">
+                    <div class="col-span-2">
+                        <img src="https://i.postimg.cc/SsNbMfbP/akemi-no-mori-estacao-trap-parceria.jpg" class="w-full h-40 sm:h-48 object-cover rounded-2xl border border-white/10 img-glow" alt="Imagem Callidus 3">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer / Seção de Conversão Final -->
+    <footer id="comercial" class="py-20 sm:py-32 text-center bg-black border-t border-purple-900/30 px-6">
+        <div class="max-w-4xl mx-auto">
+            <h3 class="text-2xl sm:text-4xl font-title neon-text mb-6 leading-tight">VAMOS ESCREVER O PRÓXIMO CAPÍTULO?</h3>
+            <p class="text-gray-400 mb-10 max-w-lg mx-auto text-base sm:text-lg">Temos formatos de patrocínio que se adaptam ao tamanho da sua ambição. De ativações no palco a drops exclusivos de marca.</p>
+            
+            <a href="mailto:contato@estacaotrap019.com.br" class="inline-block bg-white text-black px-12 py-5 rounded-full hover:bg-purple-500 hover:text-white transition uppercase font-title text-sm tracking-widest font-bold w-full sm:w-auto shadow-2xl">
+                FALAR COM O COMERCIAL
+            </a>
+
+            <div class="mt-20 flex justify-center gap-8">
+                <a href="https://www.instagram.com/estacao_trap019/" class="text-gray-500 hover:text-purple-400 transition text-sm font-title uppercase tracking-widest">Instagram</a>
+                <a href="https://www.tiktok.com/@estacao.trap019" class="text-gray-500 hover:text-purple-400 transition text-sm font-title uppercase tracking-widest">TikTok</a>
+            </div>
+            <p class="text-[9px] sm:text-[10px] text-gray-700 mt-12 tracking-[0.3em] uppercase">© 2026 Estação Trap_019 - Conectando o Underground ao Universo</p>
+        </div>
+    </footer>
+
+    <script>
+        // Função para revelar seções ao rolar a página
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100; // Ajustado para mobile
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("visible");
+                }
+            }
+        }
+
+        window.addEventListener("scroll", reveal);
+        // Chamar uma vez no carregamento
+        window.onload = reveal;
+
+
+    </script>
+</body>
+</html>
