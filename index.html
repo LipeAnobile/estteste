@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,7 +25,6 @@
             --font-text: 'Exo 2', sans-serif;
         }
 
-        html { scroll-behavior: smooth; }
         body { background-color: var(--color-bg); color: #E3E3E3; font-family: var(--font-text); overflow-x: hidden; width: 100%; }
 
         h1, h2, h3, .font-title { font-family: var(--font-title); text-transform: uppercase; }
@@ -33,11 +32,46 @@
         .neon-text { color: var(--color-purple-neon); text-shadow: 0 0 15px var(--color-purple-neon); }
         .neon-text-white { color: #fff; text-shadow: 0 0 10px var(--color-purple-neon); }
 
-        /* --- ANIMAÇÕES --- */
+        /* --- ANIMAÇÕES DE REVELAÇÃO --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         @keyframes movingGradient {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
+        }
+
+        /* --- ESTEIRA INFINITA (MARQUEE) --- */
+        .marquee-wrapper {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .marquee-content {
+            display: flex;
+            gap: 60px;
+            width: max-content;
+            animation: marquee-scroll 25s linear infinite;
+        }
+
+        .marquee-wrapper:hover .marquee-content {
+            animation-play-state: paused;
+        }
+
+        @keyframes marquee-scroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(calc(-50% - 30px)); }
         }
 
         .cta-animated {
@@ -58,10 +92,10 @@
             filter: brightness(1.2);
         }
 
-        /* --- HERO SECTION FULLSCREEN RESPONSIVA --- */
+        /* --- HERO SECTION --- */
         .hero-container {
             position: relative;
-            height: 100dvh; /* dvh é melhor para navegadores mobile */
+            height: 100dvh;
             width: 100%;
             display: flex;
             align-items: center;
@@ -88,9 +122,8 @@
             background-size: cover;
             background-position: center;
             opacity: 0;
-            transition: opacity 1.5s ease-in-out;
-            transform: scale(1.1);
             transition: opacity 1.5s ease-in-out, transform 8s linear;
+            transform: scale(1.1);
         }
 
         .hero-slide.active {
@@ -104,11 +137,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.9) 100%);
+            background: radial-gradient(circle, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.95) 100%);
             z-index: 2;
         }
 
-        /* --- PARCEIROS --- */
+        /* --- PARCEIROS RING --- */
         .partner-ring {
             position: relative;
             padding: 2px; 
@@ -120,6 +153,7 @@
             align-items: center;
             justify-content: center;
             transition: transform 0.3s ease;
+            flex-shrink: 0;
         }
 
         .partner-ring img {
@@ -199,12 +233,13 @@
 
         .stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; opacity: 0.4; background: url('https://www.transparenttextures.com/patterns/stardust.png'); pointer-events: none; }
 
-        /* Ajustes específicos para mobile */
         @media (max-width: 640px) {
-            .hero-container { padding-top: 60px; }
+            .hero-container { padding-top: 40px; }
             .count-box { padding: 0.75rem 0.25rem !important; }
             .count-box span:first-child { font-size: 1.5rem !important; }
+            .marquee-content { gap: 30px; animation-duration: 15s; }
         }
+        
     </style>
 </head>
 <body class="relative">
@@ -228,17 +263,20 @@
     <!-- Menu Dropdown -->
     <div id="menu-overlay">
         <div class="flex flex-col space-y-1">
-            <a href="#about" class="menu-link" onclick="toggleMenu()">01. Manifesto</a>
+            <a href="#about" class="menu-link" onclick="toggleMenu()">01. Sobre</a>
             <a href="#lineup-vacuum" class="menu-link" onclick="toggleMenu()">02. Line-up</a>
             <a href="#oracle" class="menu-link" onclick="toggleMenu()">03. Oráculo</a>
             <a href="#map-section" class="menu-link" onclick="toggleMenu()">04. Localização</a>
             <a href="#faq" class="menu-link" onclick="toggleMenu()">05. Dúvidas</a>
+            <a href="regulamento.html" class="menu-link" onclick="toggleMenu()">06. Regulamento</a>
+            
             <div class="h-px bg-purple-900/30 my-3"></div>
+            
             <a href="parceiros.html" class="menu-link !text-purple-400 !text-[10px]">Ecossistema de Parceiros</a>
         </div>
     </div>
 
-    <!-- SEÇÃO HERO FULLSCREEN RESPONSIVA -->
+    <!-- SEÇÃO HERO -->
     <section class="hero-container">
         <div class="hero-banner">
             <div class="hero-slide active" style="background-image: url('https://i.postimg.cc/ryd2cqhS/abnner.jpg');"></div>
@@ -259,7 +297,6 @@
                 </p>
             </div>
 
-            <!-- Countdown Otimizado para Mobile -->
             <div id="countdown" class="grid grid-cols-4 gap-2 md:gap-x-8 mx-auto w-full max-w-md md:max-w-2xl">
                 <div class="count-box py-3 md:py-5 rounded-xl md:rounded-2xl bg-black/50 backdrop-blur-md border border-white/10">
                     <span id="days" class="block text-xl md:text-4xl font-title leading-none">00</span>
@@ -284,32 +321,32 @@
                     VER LINE-UP COMPLETO
                 </a>
                 <a href="parceiros.html" class="w-full sm:w-auto border border-purple-500/50 hover:bg-purple-600/10 text-white px-8 md:px-10 py-4 md:py-5 rounded-full font-title text-[10px] md:text-[11px] tracking-widest transition-all backdrop-blur-md">
-                    OPORTUNIDADES
+                    PARCERIAS
                 </a>
             </div>
         </div>
     </section>
 
     <!-- MANIFESTO -->
-    <section id="about" class="py-16 md:py-40 px-6 max-w-7xl mx-auto scroll-mt-20">
+    <section id="about" class="py-16 md:py-40 px-6 max-w-7xl mx-auto scroll-mt-20 reveal">
         <div class="grid md:grid-cols-2 gap-10 md:gap-16 items-center">
             <div class="space-y-6 md:space-y-8 text-center md:text-left">
                 <div>
-                    <span class="text-purple-400 font-title text-[10px] tracking-[0.5em] mb-3 md:mb-4 block">MANIFESTO 019</span>
-                    <h2 class="text-2xl md:text-5xl font-title neon-text-white leading-tight">O MOVIMENTO É <br>CONSTANTE</h2>
+                    <span class="text-purple-400 font-title text-[10px] tracking-[0.5em] mb-3 md:mb-4 block">SOBRE</span>
+                    <h2 class="text-2xl md:text-5xl font-title neon-text-white leading-tight">ESTAÇÃO <br>TRAP 019</h2>
                 </div>
                 <p class="text-gray-400 leading-relaxed text-sm md:text-lg font-light">
-                    Na Estação Trap_019, o caos se torna arte. Somos o ponto onde as trajetórias individuais colidem para criar um novo universo cultural em Campinas.
+                    A Estação Trap_019 é um encontro entre música, cultura urbana e expressão artística em Campinas. Criamos um espaço para conectar artistas, público e novas ideias, fortalecendo a cena independente e dando voz a quem vive o movimento. Mais que um evento, somos uma plataforma de experiências, conexões e transformação cultural.
                 </p>
             </div>
             <div class="relative order-first md:order-last">
-                <img src="https://i.postimg.cc/ryd2cqhS/abnner.jpg" class="rounded-2xl md:rounded-3xl border border-purple-600/20 shadow-2xl w-full grayscale aspect-video md:aspect-auto object-cover" alt="Manifesto">
+                <img src="https://i.postimg.cc/P5QwfdXx/alien-estacao-trap.jpg" class="rounded-2xl md:rounded-3xl border border-purple-600/20 shadow-2xl w-full aspect-video md:aspect-auto object-cover" alt="Sobre">
             </div>
         </div>
     </section>
 
     <!-- LINE-UP -->
-    <section id="lineup-vacuum" class="py-16 md:py-40 bg-zinc-950 border-y border-purple-900/20 scroll-mt-20 overflow-hidden">
+    <section id="lineup-vacuum" class="py-16 md:py-40 bg-zinc-950 border-y border-purple-900/20 scroll-mt-20 overflow-hidden reveal">
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid md:grid-cols-2 gap-10 md:gap-12 items-center">
                 <div class="order-2 md:order-1 text-center md:text-left space-y-5 md:space-y-6">
@@ -328,19 +365,19 @@
                 </div>
                 <div class="order-1 md:order-2 relative group px-4 md:px-0">
                     <div class="absolute inset-0 bg-purple-600/20 blur-[60px] md:blur-[100px] rounded-full group-hover:bg-purple-600/40 transition-all"></div>
-                    <img src="https://i.postimg.cc/4xZLNyXQ/destaque-artistas-2.png" class="relative z-10 rounded-2xl md:rounded-[2rem] border border-white/10 shadow-2xl transform rotate-1 md:rotate-2 hover:rotate-0 transition-all duration-500 w-full" alt="Destaque Artistas">
+                    <img src="https://i.postimg.cc/k5pfNyxM/artistas-line-up-estacao-trap-campinas.jpg" class="relative z-10 rounded-2xl md:rounded-[2rem] border border-white/10 shadow-2xl transform rotate-1 md:rotate-2 hover:rotate-0 transition-all duration-500 w-full" alt="Destaque Artistas">
                 </div>
             </div>
         </div>
     </section>
 
     <!-- ORÁCULO -->
-    <section id="oracle" class="py-20 md:py-48 bg-black relative scroll-mt-20 overflow-hidden">
+    <section id="oracle" class="py-20 md:py-48 bg-black relative scroll-mt-20 overflow-hidden reveal">
         <div class="max-w-4xl mx-auto px-6 text-center">
             <h2 class="text-3xl md:text-6xl font-title neon-text-white mb-6">O ORÁCULO 019</h2>
             <div class="mb-10 md:mb-12 animate-bounce">
                 <span class="text-purple-400 font-title text-[8px] md:text-xs tracking-[0.3em] uppercase bg-purple-900/20 border border-purple-500/30 px-5 md:px-6 py-2 md:py-3 rounded-full backdrop-blur-sm">
-                    ✨ Clique no cristal e veja seu destino
+                    ✨ Clique e veja o que um artista quer dizer pra você:
                 </span>
             </div>
             <div class="relative inline-block">
@@ -359,7 +396,7 @@
     </section>
 
     <!-- LOCALIZAÇÃO -->
-    <section id="map-section" class="py-16 md:py-24 px-6 bg-black scroll-mt-20">
+    <section id="map-section" class="py-16 md:py-24 px-6 bg-black scroll-mt-20 reveal">
         <div class="max-w-7xl mx-auto text-center mb-10 md:mb-16">
             <h2 class="text-2xl md:text-5xl font-title neon-text-white mb-4">LOCALIZAÇÃO</h2>
             <p class="text-gray-400 text-xs md:text-lg font-light">Praça Mal. Floriano Peixoto - Centro, Campinas - SP</p>
@@ -370,7 +407,7 @@
     </section>
 
     <!-- FAQ -->
-    <section id="faq" class="py-16 md:py-40 px-6 bg-black scroll-mt-20">
+    <section id="faq" class="py-16 md:py-40 px-6 bg-black scroll-mt-20 reveal">
         <div class="max-w-4xl mx-auto">
             <div class="text-center mb-10 md:mb-16">
                 <span class="text-purple-400 font-title text-[9px] md:text-[10px] tracking-[0.6em] mb-3 block uppercase">Suporte</span>
@@ -389,38 +426,82 @@
                         <h3 class="font-title text-[11px] md:text-lg tracking-wider group-hover:text-purple-400 transition-colors">Qual a classificação etária?</h3>
                         <span class="faq-icon text-xl transition-transform">+</span>
                     </div>
-                    <div class="faq-content"><p class="text-gray-400 text-xs md:text-base leading-relaxed">Classificação 16 anos. Menores acompanhados pelos pais ou responsáveis legais.</p></div>
+                    <div class="faq-content"><p class="text-gray-400 text-xs md:text-base leading-relaxed">Classificação 16 anos. Menores acompanhados pelos pais.</p></div>
+                </div>
+                <div class="space-y-3">
+                <div class="faq-item group">
+                    <div class="faq-trigger py-5 flex justify-between items-center cursor-pointer" onclick="toggleFaq(this)">
+                        <h3 class="font-title text-[11px] md:text-lg tracking-wider group-hover:text-purple-400 transition-colors">Vai ter bar ou alimentação?</h3>
+                        <span class="faq-icon text-xl transition-transform">+</span>
+                    </div>
+                    <div class="faq-content"><p class="text-gray-400 text-xs md:text-base leading-relaxed">Sim, o evento contará com bar e opções de consumo no local.</p></div>
+                </div>
+                <div class="space-y-3">
+                <div class="faq-item group">
+                    <div class="faq-trigger py-5 flex justify-between items-center cursor-pointer" onclick="toggleFaq(this)">
+                        <h3 class="font-title text-[11px] md:text-lg tracking-wider group-hover:text-purple-400 transition-colors">Pode filmar e tirar fotos?</h3>
+                        <span class="faq-icon text-xl transition-transform">+</span>
+                    </div>
+                    <div class="faq-content"><p class="text-gray-400 text-xs md:text-base leading-relaxed">Sim! Incentivamos registrar momentos, apenas respeitando os artistas e o público.</p></div>
+                </div>
+                <div class="space-y-3">
+                <div class="faq-item group">
+                    <div class="faq-trigger py-5 flex justify-between items-center cursor-pointer" onclick="toggleFaq(this)">
+                        <h3 class="font-title text-[11px] md:text-lg tracking-wider group-hover:text-purple-400 transition-colors">Precisa levar documento?</h3>
+                        <span class="faq-icon text-xl transition-transform">+</span>
+                    </div>
+                    <div class="faq-content"><p class="text-gray-400 text-xs md:text-base leading-relaxed">Sim, é obrigatório apresentar documento oficial com foto para acesso ao evento.</p></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- UNIVERSO PARCEIRO -->
-    <section id="brands" class="py-16 md:py-40 px-6 bg-zinc-950/50 border-y border-purple-900/20">
-        <div class="max-w-7xl mx-auto text-center">
-            <h2 class="text-lg md:text-3xl font-title mb-12 md:mb-24 tracking-[0.3em] md:tracking-[0.5em] opacity-40 uppercase">Universo Parceiro</h2>
-            <div class="grid grid-cols-2 sm:grid-cols-4 items-center gap-8 md:gap-20">
-                <a href="parceiros.html#callidus" class="group flex justify-center">
-                    <div class="partner-ring">
-                        <img src="https://i.postimg.cc/L6XZFKFF/call.png" class="w-20 md:w-36 h-20 md:h-36 object-cover" alt="Callidus">
-                    </div>
-                </a>
-                <a href="parceiros.html#tigresinhas" class="group flex justify-center">
-                    <div class="partner-ring" style="animation-delay: 0.5s;">
-                        <img src="https://i.postimg.cc/zvTc0kYc/tt.jpg" class="w-20 md:w-36 h-20 md:h-36 object-cover" alt="Tigresinhas">
-                    </div>
-                </a>
-                <a href="parceiros.html#dommarco" class="group flex justify-center">
-                    <div class="partner-ring" style="animation-delay: 1s;">
-                        <img src="https://i.postimg.cc/cHrG5WgG/dom-marcos.jpg" class="w-20 md:w-36 h-20 md:h-36 object-cover" alt="Dom Marco">
-                    </div>
-                </a>
-                <a href="parceiros.html#beco" class="group flex justify-center">
-                    <div class="partner-ring" style="animation-delay: 1.5s;">
-                        <img src="https://i.postimg.cc/pVCLSW6L/beco-lp.jpg" class="w-20 md:w-36 h-20 md:h-36 object-cover" alt="Beco">
-                    </div>
-                </a>
+    <!-- UNIVERSO PARCEIRO (ESTEIRA INFINITA) -->
+    <section id="brands" class="py-16 md:py-40 bg-zinc-950/50 border-y border-purple-900/20 reveal">
+        <div class="max-w-7xl mx-auto text-center px-6">
+            <h2 class="text-lg md:text-3xl font-title mb-12 md:mb-16 tracking-[0.3em] md:tracking-[0.5em] opacity-40 uppercase">Universo Parceiro</h2>
+            
+            <div class="marquee-wrapper">
+                <div class="marquee-content" id="marqueeList">
+                    <!-- Conteúdo original -->
+                     <a href="parceiros.html#guida" class="partner-ring">
+                        <img src="https://i.postimg.cc/GhKFb28g/guida-calixto-politica-estacao-trap-parceria.jpg" class="w-20 md:w-32 h-20 md:h-32 object-cover" alt="Guida Calixto">
+                    <a href="parceiros.html#callidus" class="partner-ring">
+                        <img src="https://i.postimg.cc/CM3hdHDd/callidus-estacao-trap-parceria.jpg" class="w-20 md:w-32 h-20 md:h-32 object-cover" alt="Callidus">
+                    </a>
+                    <a href="parceiros.html#tigresinhas" class="partner-ring">
+                        <img src="https://i.postimg.cc/FRPv90vr/tigresinhas-estacao-trap-parceria.jpg" class="w-20 md:w-32 h-20 md:h-32 object-cover" alt="Tigresinhas">
+                    </a>
+                    <a href="parceiros.html#dommarco" class="partner-ring">
+                        <img src="https://i.postimg.cc/cHrG5WgG/dom-marcos.jpg" class="w-20 md:w-32 h-20 md:h-32 object-cover" alt="Dom Marco">
+                    </a>
+                    <a href="parceiros.html#beco" class="partner-ring">
+                        <img src="https://i.postimg.cc/pVCLSW6L/beco-lp.jpg" class="w-20 md:w-32 h-20 md:h-32 object-cover" alt="Beco">
+                    </a>
+                    <a href="parceiros.html#akemi" class="partner-ring">
+                        <img src="https://i.postimg.cc/DyX6FFQp/akemi-no-mori-estacao-trap-parceria.jpg" class="w-20 md:w-32 h-20 md:h-32 object-cover" alt="Akemi No Mori">
+                    </a>
+                    <!-- Repetir itens para o loop infinito sem "saltos" -->
+                    <a href="parceiros.html#guida" class="partner-ring">
+                        <img src="https://i.postimg.cc/GhKFb28g/guida-calixto-politica-estacao-trap-parceria.jpg" class="w-20 md:w-32 h-20 md:h-32 object-cover" alt="Guida Calixto">
+                    <a href="parceiros.html#callidus" class="partner-ring">
+                        <img src="https://i.postimg.cc/CM3hdHDd/callidus-estacao-trap-parceria.jpg" class="w-20 md:w-32 h-20 md:h-32 object-cover" alt="Callidus">
+                    </a>
+                    <a href="parceiros.html#tigresinhas" class="partner-ring">
+                        <img src="https://i.postimg.cc/FRPv90vr/tigresinhas-estacao-trap-parceria.jpg" class="w-20 md:w-32 h-20 md:h-32 object-cover" alt="Tigresinhas">
+                    </a>
+                    <a href="parceiros.html#dommarco" class="partner-ring">
+                        <img src="https://i.postimg.cc/cHrG5WgG/dom-marcos.jpg" class="w-20 md:w-32 h-20 md:h-32 object-cover" alt="Dom Marco">
+                    </a>
+                    <a href="parceiros.html#beco" class="partner-ring">
+                        <img src="https://i.postimg.cc/pVCLSW6L/beco-lp.jpg" class="w-20 md:w-32 h-20 md:h-32 object-cover" alt="Beco">
+                    </a>
+                    <a href="parceiros.html#akemi" class="partner-ring">
+                        <img src="https://i.postimg.cc/DyX6FFQp/akemi-no-mori-estacao-trap-parceria.jpg" class="w-20 md:w-32 h-20 md:h-32 object-cover" alt="Akemi No Mori">
+                    </a>
+                </div>
             </div>
+
             <div class="mt-16 md:mt-24">
                 <a href="parceiros.html" class="cta-animated text-white px-10 md:px-12 py-4 md:py-5 rounded-full font-title text-[10px] md:text-[13px] tracking-[0.2em] uppercase font-bold">
                     Conectar minha Marca
@@ -432,11 +513,31 @@
     <!-- RODAPÉ -->
     <footer class="py-12 md:py-20 border-t border-purple-900/20 text-center px-6">
         <h3 class="font-title text-base md:text-xl mb-4 neon-text">Estação Trap_019</h3>
+        
+        <div class="mb-8">
+            <a href="regulamento.html" class="inline-block text-[10px] md:text-xs font-title text-gray-500 hover:text-purple-400 transition-all border border-gray-800 hover:border-purple-500 px-6 py-2 rounded-full tracking-widest uppercase">
+                Ver Regulamento do Evento
+            </a>
+        </div>
+
         <p class="text-[7px] md:text-[8px] text-gray-800 font-mono tracking-widest uppercase">© 2026 ESTAÇÃO TRAP_019. ALL SYSTEMS OPERATIONAL.</p>
     </footer>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
+        // Lógica de Scroll Reveal
+        const revealCallback = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        };
+
+        const revealObserver = new IntersectionObserver(revealCallback, { threshold: 0.15 });
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        // Menu Toggle
         const menuToggle = document.getElementById('menu-toggle');
         const menuOverlay = document.getElementById('menu-overlay');
         const menuPath = document.getElementById('menu-path');
@@ -449,13 +550,7 @@
         }
         menuToggle.addEventListener('click', toggleMenu);
 
-        // Fecha menu ao clicar em link
-        document.querySelectorAll('.menu-link').forEach(link => {
-            link.addEventListener('click', () => {
-                if(menuOverlay.classList.contains('active')) toggleMenu();
-            });
-        });
-
+        // FAQ Toggle
         function toggleFaq(trigger) {
             const item = trigger.parentElement;
             const isActive = item.classList.contains('active');
@@ -463,6 +558,7 @@
             if (!isActive) item.classList.add('active');
         }
 
+        // Oráculo
         const oracleVerses = [
             { text: "Nada é perfeito, mas é no caos que a gente aprende a sentir o cheiro do amanhã.", artist: "ViniSeven & Gomesz" },
             { text: "A minha lei da atração é levantar e ir fazer.", artist: "Joana Black" },
@@ -493,7 +589,6 @@
             L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(map);
             L.marker([-22.9099, -47.0626], { icon: L.divIcon({ html: "<div style='background:#a400ff;width:12px;height:12px;border-radius:50%;box-shadow:0 0 15px #a400ff'></div>" }) }).addTo(map);
             
-            // Hero Slider - 4 SEGUNDOS
             let currentHeroSlide = 0;
             const heroSlides = document.querySelectorAll('.hero-slide');
             setInterval(() => {
@@ -503,7 +598,6 @@
                 heroSlides[currentHeroSlide].classList.add('active');
             }, 4000);
 
-            // Countdown
             const eventDate = new Date("June 20, 2026 13:00:00").getTime();
             setInterval(() => {
                 const dist = eventDate - Date.now();
