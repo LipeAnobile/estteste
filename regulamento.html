@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regulamento | Estação Trap_019</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --color-purple-neon: #a400ff;
+            --color-bg: #000000;
+            --font-title: 'Orbitron', sans-serif;
+            --font-text: 'Exo 2', sans-serif;
+        }
+
+        body {
+            background-color: var(--color-bg);
+            color: #e5e5e5;
+            font-family: var(--font-text);
+            overflow-x: hidden;
+        }
+
+        .font-title { font-family: var(--font-title); }
+        .neon-text { color: var(--color-purple-neon); text-shadow: 0 0 10px var(--color-purple-neon); }
+
+        .rules-card {
+            background: rgba(164, 0, 255, 0.03);
+            border: 1px solid rgba(164, 0, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .rules-card:hover {
+            border-color: var(--color-purple-neon);
+            background: rgba(164, 0, 255, 0.05);
+        }
+
+        .stars { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; 
+            opacity: 0.3; background: url('https://www.transparenttextures.com/patterns/stardust.png'); 
+        }
+
+        /* Linha Neon Vertical */
+        .neon-line {
+            width: 2px;
+            background: linear-gradient(to bottom, transparent, var(--color-purple-neon), transparent);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <div class="stars"></div>
+
+    <!-- Navegação Simples -->
+    <nav class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-purple-900/30">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex justify-between items-center">
+            <a href="index.html" class="font-title text-[10px] text-purple-400 hover:text-white transition flex items-center gap-2 group">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="group-hover:-translate-x-1 transition-transform"><path d="m15 18-6-6 6-6"/></svg>
+                VOLTAR
+            </a>
+            <span class="font-title text-xs sm:text-sm tracking-widest neon-text">REGULAMENTO_019</span>
+            <div class="w-12"></div>
+        </div>
+    </nav>
+
+    <main class="pt-32 pb-24 px-6 max-w-4xl mx-auto flex-grow">
+        <header class="mb-16 text-center">
+            <h1 class="text-4xl md:text-6xl font-title mb-6 neon-text-white leading-tight">TERMOS DE <br><span class="neon-text">ACESSO</span></h1>
+            <p class="text-gray-400 font-light tracking-wide">Para garantir a melhor experiência no universo 019, siga as diretrizes abaixo.</p>
+        </header>
+
+        <div class="space-y-12 relative">
+            
+            <!-- Sessão 01 -->
+            <section class="flex gap-6 md:gap-10">
+                <div class="hidden md:flex flex-col items-center">
+                    <div class="w-8 h-8 rounded-full border border-purple-600 flex items-center justify-center font-title text-[10px] text-purple-400">01</div>
+                    <div class="neon-line flex-grow"></div>
+                </div>
+                <div class="rules-card p-8 rounded-3xl flex-grow">
+                    <h2 class="font-title text-purple-400 text-lg mb-4 tracking-widest">CLASSIFICAÇÃO ETÁRIA</h2>
+                    <ul class="space-y-3 text-gray-300 font-light leading-relaxed list-disc list-inside">
+                        <li>Evento exclusivo para maiores de <span class="text-white font-bold">18 anos</span>.</li>
+                        <li>Obrigatória a apresentação de documento oficial original com foto (RG, CNH, Passaporte ou E-Título com foto).</li>
+                        <li>Não será permitida a entrada de menores mesmo acompanhados por responsáveis.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Sessão 02 -->
+            <section class="flex gap-6 md:gap-10">
+                <div class="hidden md:flex flex-col items-center">
+                    <div class="w-8 h-8 rounded-full border border-purple-600 flex items-center justify-center font-title text-[10px] text-purple-400">02</div>
+                    <div class="neon-line flex-grow"></div>
+                </div>
+                <div class="rules-card p-8 rounded-3xl flex-grow">
+                    <h2 class="font-title text-purple-400 text-lg mb-4 tracking-widest">ENTRADA SOLIDÁRIA</h2>
+                    <p class="text-gray-300 font-light leading-relaxed mb-4">O acesso ao evento está condicionado à doação de <span class="text-white font-bold">1kg de alimento não perecível</span> (exceto sal e açúcar).</p>
+                    <p class="text-[10px] text-purple-500 font-title uppercase tracking-widest italic">Apoie a comunidade local enquanto curte o underground.</p>
+                </div>
+            </section>
+
+            <!-- Sessão 03 -->
+            <section class="flex gap-6 md:gap-10">
+                <div class="hidden md:flex flex-col items-center">
+                    <div class="w-8 h-8 rounded-full border border-purple-600 flex items-center justify-center font-title text-[10px] text-purple-400">03</div>
+                    <div class="neon-line flex-grow"></div>
+                </div>
+                <div class="rules-card p-8 rounded-3xl flex-grow">
+                    <h2 class="font-title text-purple-400 text-lg mb-4 tracking-widest">ITENS PROIBIDOS</h2>
+                    <div class="grid md:grid-cols-2 gap-4 text-gray-400 text-sm font-light">
+                        <ul class="space-y-2 list-none">
+                            <li class="flex items-center gap-2"><span class="text-red-500">✕</span> Armas de qualquer natureza</li>
+                            <li class="flex items-center gap-2"><span class="text-red-500">✕</span> Objetos perfurocortantes</li>
+                            <li class="flex items-center gap-2"><span class="text-red-500">✕</span> Garrafas de vidro ou latas</li>
+                            <li class="flex items-center gap-2"><span class="text-red-500">✕</span> Substâncias ilícitas</li>
+                        </ul>
+                        <ul class="space-y-2 list-none">
+                            <li class="flex items-center gap-2"><span class="text-red-500">✕</span> Fogos de artifício</li>
+                            <li class="flex items-center gap-2"><span class="text-red-500">✕</span> Guarda-chuvas de ponta</li>
+                            <li class="flex items-center gap-2"><span class="text-red-500">✕</span> Capacetes e correntes grossas</li>
+                            <li class="flex items-center gap-2"><span class="text-red-500">✕</span> Malas ou mochilas volumosas</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sessão 04 -->
+            <section class="flex gap-6 md:gap-10">
+                <div class="hidden md:flex flex-col items-center">
+                    <div class="w-8 h-8 rounded-full border border-purple-600 flex items-center justify-center font-title text-[10px] text-purple-400">04</div>
+                    <div class="neon-line flex-grow"></div>
+                </div>
+                <div class="rules-card p-8 rounded-3xl flex-grow">
+                    <h2 class="font-title text-purple-400 text-lg mb-4 tracking-widest">DIREITO DE IMAGEM</h2>
+                    <p class="text-gray-300 font-light leading-relaxed">
+                        Ao ingressar na Estação Trap_019, o frequentador autoriza o uso gratuito de sua imagem e voz em fotos, vídeos e materiais de divulgação do evento em redes sociais, sites e TV.
+                    </p>
+                </div>
+            </section>
+
+        </div>
+
+        <div class="mt-20 p-8 border border-white/5 rounded-3xl text-center">
+            <p class="text-xs text-gray-500 uppercase tracking-[0.3em] mb-4">Dúvidas adicionais?</p>
+            <a href="https://instagram.com/estacao_trap019" target="_blank" class="text-purple-400 font-title text-sm hover:text-white transition underline underline-offset-8">CHAMA NO DIRECT →</a>
+        </div>
+    </main>
+
+    <footer class="py-12 border-t border-purple-900/20 text-center">
+        <p class="text-[8px] md:text-[10px] text-gray-700 font-title tracking-[0.5em] uppercase">© 2026 Estação Trap_019 - Segurança em Primeiro Lugar</p>
+    </footer>
+</body>
+</html>
